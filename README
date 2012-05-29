@@ -26,7 +26,7 @@ IP using extra parameters like python manage.py runserver [port or ipaddr:port]
 This step is necessary to send a correct link for email confirmation and password change.
 
 I have created a gmail account to use google smtp server for email confirmation and change password link. Email address is informationsocialnetwork@gmail.com and password is #password#
-Settings for the same is in settings.py file. Everything is already set, You don't need to change this settings unless you are using different SMTP or account.
+Settings for the same is in settings.py file. Everything is already set, You don't need to change this settings unless you want to use different SMTP or account.
 
 
 
