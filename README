@@ -1,1 +1,42 @@
 Information Composition Social Network 
+
+Django/Pinax Project of Information Composition Social Network.
+
+Django version 1.3.1
+Pinax version 0.9b1.dev10
+Python version 2.7.2
+
+This project has many dependencies. You can install everything including Django and Pinax with pip requirements file.
+Please follow following steps to install dependencies and run project.
+
+(Instructions for Linux/Unix machines)
+
+1) Install Python 2.7
+2) Install pip for python 2.7
+3) Install PostGreSQL
+3) sudo pip install -r requirements.txt
+4) (After Installation) cd InfoShare
+5) Open settings.py and replace databse NAME social with your postgresql database name.
+6) Add USER name in your database setting.
+7) Synchronize database with python manage.py syncdb
+8) Create super user during database sync.
+9) Run site using python manage.py runserver   (Default port is 8000 and IP is 127.0.0.1 (localhost), But you can change port number and 
+IP using extra parameters like python manage.py runserver [port or ipaddr:port]
+10) Log in to 127.0.0.1:8000/admin or {{your configured IP and port as per step 9}}/admin and go to sites, replace example.com with 127.0.0.1:8000 or your configured IP and port as per step 9
+This step is necessary to send a correct link for email confirmation and password change.
+
+I have created a gmail account to use google smtp server for email confirmation and change password link. Email address is informationsocialnetwork@gmail.com and password is #password#
+Settings for the same is in settings.py file. Everything is already set, You don't need to change this settings unless you are using different SMTP or account.
+
+
+
+
+
+--> To update database :- python manage.py syncdb
+--> To run project :- python manage.py runserver
+--> To send mail to registered users and change password requests :- python manage.py send_mail
+--> To send deferred mails :- python manage.py retry_deferred
+
+
+
+
