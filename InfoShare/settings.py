@@ -21,7 +21,7 @@ INTERNAL_IPS = [
 ]
 
 ADMINS = [
-    # ("jainit", "mjainit@gmail.com"),
+    # ("user", "user@host.com"),
 ]
 
 MANAGERS = ADMINS
