@@ -16,12 +16,12 @@ Please follow following steps to install dependencies and run project.
 3) Install PostGreSQL
 3) sudo pip install -r requirements.txt
 4) (After Installation) cd InfoShare
-5) Open settings.py and replace databse NAME social with your postgresql database name.
+5) Open settings.py and replace database NAME social with your postgresql database name.
 6) Add USER name in your database setting.
 7) Synchronize database with python manage.py syncdb
 8) Create super user during database sync.
 9) Run site using python manage.py runserver   (Default port is 8000 and IP is 127.0.0.1 (localhost), But you can change port number and 
-IP using extra parameters like python manage.py runserver [port or ipaddr:port]
+IP using extra parameters like python manage.py runserver [port or ipaddr:port])
 10) Log in to 127.0.0.1:8000/admin or {{your configured IP and port as per step 9}}/admin and go to sites, replace example.com with 127.0.0.1:8000 or your configured IP and port as per step 9
 This step is necessary to send a correct link for email confirmation and password change.
 

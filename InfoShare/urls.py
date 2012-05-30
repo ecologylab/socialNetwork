@@ -19,8 +19,8 @@ urlpatterns = patterns("",
     url(r"^account/", include("pinax.apps.account.urls")),
     url(r"^openid/", include(PinaxConsumer().urls)),
     url(r"^userpage/", direct_to_template, {"template" : "user/user_profile.html",}, name="userpage"),
-    url(r'^avatar/', include('avatar.urls')),
-    url(r'^avatar_crop/', include('avatar_crop.urls')),
+#    url(r'^avatar/', include('avatar.urls')),
+#    url(r'^avatar_crop/', include('avatar_crop.urls')),
 )
 
 

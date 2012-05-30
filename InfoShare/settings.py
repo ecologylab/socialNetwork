@@ -30,7 +30,7 @@ DATABASES = {
     "default": {
         "ENGINE": "postgresql_psycopg2", # Add "postgresql_psycopg2", "postgresql", "mysql", "sqlite3" or "oracle".
         "NAME": "social",                       # Or path to database file if using sqlite3.
-        "USER": "",                             # Not used with sqlite3.
+        "USER": "jainit",                             # Not used with sqlite3.
         "PASSWORD": "",                         # Not used with sqlite3.
         "HOST": "",                             # Set to empty string for localhost. Not used with sqlite3.
         "PORT": "",                             # Set to empty string for default. Not used with sqlite3.
@@ -54,22 +54,14 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
+
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, "site_media", "media")
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = "/home/jainit/trunk/InfoShare/site_media/media/"
-
-# Absolute path to the directory that holds static files like app media.
-# Example: "/home/media/media.lawrence.com/apps/"
 STATIC_ROOT = os.path.join(PROJECT_ROOT, "site_media", "static")
 
-# URL that handles the static files like app media.
-# Example: "http://media.lawrence.com"
+
+MEDIA_URL = os.path.join(PROJECT_ROOT, "site_media", "media")
 STATIC_URL = os.path.join(PROJECT_ROOT, "static")
+
 
 # Additional directories which hold static files
 STATICFILES_DIRS = [
