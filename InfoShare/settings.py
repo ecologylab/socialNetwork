@@ -60,7 +60,9 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, "site_media", "static")
 
 
 MEDIA_URL = os.path.join(PROJECT_ROOT, "site_media", "media")
-STATIC_URL = os.path.join(PROJECT_ROOT, "static")
+STATIC_URL = os.path.join(PROJECT_ROOT, "static/")
+
+
 
 
 # Additional directories which hold static files
@@ -101,6 +103,7 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "pinax.apps.account.middleware.LocaleMiddleware",
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
+    "pagination.middleware.PaginationMiddleware",
 #    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.csrf.CsrfResponseMiddleware",
 ]
@@ -124,6 +127,9 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "pinax.core.context_processors.pinax_settings",
     
     "pinax.apps.account.context_processors.account",
+    
+    "notification.context_processors.notification",
+    "announcements.context_processors.site_wide_announcements",
 ]
 
 INSTALLED_APPS = [
@@ -140,25 +146,27 @@ INSTALLED_APPS = [
     
       
     # external
+    "notification",
     "staticfiles",
     "compressor",
-#    "debug_toolbar",
+    "debug_toolbar",
     "mailer",
     "django_openid",
     "timezones",
     "emailconfirmation",
+    "announcements",
+    "pagination",
+    "idios",
     "metron",
-    "django_forms_bootstrap",
-
+    "django_forms_bootstrap", 
+   
     # Pinax
     "pinax.apps.account",
     "pinax.apps.signup_codes",
     
     
     # project
-    "about",
-#    "avatar_crop",
-#    "avatar",
+    "profiles",
 
 ]
 
@@ -166,12 +174,20 @@ FIXTURE_DIRS = [
     os.path.join(PROJECT_ROOT, "fixtures"),
 ]
 
+ABSOLUTE_URL_OVERRIDES = {                                                                                                                                                                     
+     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,                                                                                                                               
+}                                                                                                                                                                                              
+                                                                                                                                                                                               
+AUTH_PROFILE_MODULE = "profiles.Profile"                                                                                                                                                       
+NOTIFICATION_LANGUAGE_MODULE = "account.Account"  
+
+
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 
 
 EMAIL_BACKEND = "mailer.backend.DbBackend"
-AVATAR_CROP_MIN_SIZE = 8
+
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_USE_OPENID = True
 ACCOUNT_REQUIRED_EMAIL = True
