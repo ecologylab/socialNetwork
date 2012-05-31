@@ -5,8 +5,8 @@
 {% block head_title %}{% trans "User Home" %}{% endblock %}
 
 {% block body %}
-    <header class="jumbotron subhead" id="overview">
-        <h1>{% trans "User Profile" %}</h1>
-        <p class="lead">{% trans "Under Construction" %}</p>
-    </header>
+    <div style="text-align:left">
+    <p>{% blocktrans %}  <a href="/profiles/edit/" class="btn primary large">Edit Profile</a>{% endblocktrans %}</p>
+    <p>{% blocktrans %}  <a href="/profiles/all/" class="btn primary large">All Profiles</a>{% endblocktrans %}</p>
+    </div>
 {% endblock %}

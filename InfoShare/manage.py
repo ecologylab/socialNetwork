@@ -4,7 +4,8 @@ import sys
 try:
     import pinax
 except ImportError:
-    sys.stderr.write("Error: Can't import Pinax. Make sure you have Pinax installed.\n")
+    sys.stderr.write("Error: Can't import Pinax. Make sure you are in a "
+        "virtual environment that has\nPinax installed.\n")
     sys.exit(1)
 else:
     import pinax.env
