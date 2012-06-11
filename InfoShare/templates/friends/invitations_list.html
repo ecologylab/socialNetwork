@@ -1,0 +1,32 @@
+{% extends 'account/base.html' %}
+{% load i18n %}
+
+{% block head_title %}{% if status == 'received' %}{% trans "Received invitations" %}{% endif %}{% if status == 'sent' %}{% trans "Sent invitations" %}{% endif %}{% endblock %}
+
+
+{% block body %}
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>{% if status == 'received' %}{% trans "From" %}{% endif %}{% if status == 'sent' %}{% trans "To" %}{% endif %}</th>
+			<th>{% if status == 'received' %}{% trans "Received" %}{% endif %}{% if status == 'sent' %}{% trans "Sent" %}{% endif %}</th>
+			<th>{% trans "Invitation" %}</th>
+		</tr>
+	</thead>
+	<tbody>{% for invitation in invitations %}
+	
+		<tr>
+			<td>
+				<a href="/profiles/">{% if status == 'received' %}{{ invitation.from_user }}{% endif %}{% if status == 'sent' %}{{ invitation.to_user }}{% endif %}</a>
+			</td>
+			<td>{{ invitation.sent }}</td>
+			<td>
+				<a href="{% url friends_show_invitation invitation.pk %}">{% trans "Details" %}</a>
+			</td>
+		</tr>{% endfor %}
+		
+	</tbody>
+</table>
+
+{% endblock %}

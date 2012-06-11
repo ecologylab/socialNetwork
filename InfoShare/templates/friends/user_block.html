@@ -1,0 +1,16 @@
+{% extends 'friends/base.html' %}
+{% load i18n %}
+
+{% block friends_title %}{% blocktrans %}Block {{ blocked }} from sending invitations{% endblocktrans %}{% endblock %}
+
+{% block friends_content %}
+<div style="text-align:center">
+<form action="" method="post">{% csrf_token %}
+	<p>{% blocktrans %}Are you sure you want to block {{ blocked }} from sending you invitations?{% endblocktrans %}</p>
+	<fieldset>
+		{{ form.as_p }}
+	</fieldset>
+	<input type="submit" value="{% trans "Block" %}" />
+</form>
+</div>
+{% endblock %}

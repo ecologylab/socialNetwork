@@ -1,0 +1,1 @@
+{% load i18n %}{{ invitation_to_user }} has accepted your friend request.

@@ -10,11 +10,17 @@
     {% user_display page_user as page_user_display %}
     <header class="jumbotron subhead" id="overview">
         <h1>{{ page_user_display }}</h1>
+        <p>                    </p>
     </header>
     
+    {% if not is_me %}
+    <a href="{% url 'messages_compose_to' recipient=page_user_display %}" class="btn btn-info"> <i class="icon-envelope icon-white"></i> &nbsp; Send Message </a>
+    &nbsp;
+    <a href="{% url "friends_invite" username=page_user_display %}" class="btn btn-primary"> <i class="icon-plus icon-white"></i> &nbsp; Add as friend</a>
+    {% endif %}
     {% include "profiles/_profile_info.html" %}
     
     {% if is_me %}
-        <p><a href="{% url "profile_edit" %}" class="btn">{% trans "Update my profile" %}</a></p>
+        <p><a href="{% url "profile_edit"  %}" class="btn"> <i class="icon-edit"></i> &nbsp;{% trans "Edit Profile" %}</a></p>
     {% endif %}
 {% endblock %}

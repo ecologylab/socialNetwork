@@ -1,0 +1,23 @@
+{% extends 'friends/base.html' %}
+{% load i18n %}
+
+
+{% block friends_title %}{% trans "Friends" %}{% endblock %}
+
+{% block friends_content %}
+
+<div style="text-align:center">
+<h2> My Friends </h2>
+</br>
+</br>
+{% if friends %} 
+    {% for friend in friends %}
+   <h4> <ul>
+        <li><a href="{% url profile_detail username=friend.username %}">{{ friend }}</a>  &nbsp; &nbsp;   <a href="{% url friends_remove friend.username %}" class="btn btn-danger"> <i class="icon-remove icon-white"></i> &nbsp;{% trans "Remove" %}</a></li> </br>
+    </ul> </h4>
+   {% endfor %}
+{% else %}
+  <h2> You still don't have any friends, visit <a href="/profiles">All Profiles</a> to find your friends </h2>
+{% endif %}
+</div>   
+{% endblock %}

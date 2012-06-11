@@ -1,0 +1,2 @@
+{% load i18n %}{% url profile_detail username=removed_friend.username as user_url %}
+{% blocktrans %}<a href="{{ user_url }}">{{ removed_friend }}</a> was removed from your friends.{% endblocktrans %}

@@ -1,0 +1,16 @@
+{% extends 'friends/base.html' %}
+{% load i18n %}
+
+{% block friends_title %}{% blocktrans %}Remove {{ friend }} from your friends{% endblocktrans %}{% endblock %}
+
+{% block friends_content %}
+<form action="" method="post">{% csrf_token %}
+<div style="text-align:center">
+	<p>{% blocktrans %}Are you sure you want to remove {{ friend }} from your friends?{% endblocktrans %}</p>
+	<fieldset>
+		{{ form.as_p }}
+	</fieldset>
+	<input type="submit" value="{% trans "Remove" %}" />
+</form>
+<div style="text-align:center">
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "subnav_base.html" %}
+{% load i18n %}  
+{% block head_title %} Messages {% endblock %}
+
+
+{% block subnav %}
+<ul class="nav nav-pills nav-stacked">
+    <li class="nav-header"> Messages </li>
+    <li><a href="{% url messages_inbox %} "> <i class="icon-inbox"></i> &nbsp; {% trans "Inbox" %}</a></li>
+    <li><a href="{% url messages_outbox %} "> <i class="icon-arrow-up"></i> &nbsp;{% trans "Sent Messages" %}</a></li>
+    <li><a href="{% url messages_compose %} "> <i class="icon-plus-sign"></i> &nbsp;{% trans "New Message" %}</a></li>
+    <li><a href="{% url messages_trash %} "> <i class="icon-trash"></i> &nbsp;{% trans "Trash" %}</a></li>
+</ul>
+{% endblock %}

@@ -7,23 +7,27 @@
 {% block body_class %}account{% endblock %}
 
 {% block subnav %}
-    <ul class="nav nav-list">
+    <ul class="nav nav-pills nav-stacked">
         <li class="nav-header">{% trans "Account" %}</li>
-        <li><a href="{% url "acct_email" %}">{% trans "Email Addresses" %}</a></li>
+        <li><a href="{% url "acct_email" %}"><i class="icon-envelope"></i> &nbsp; {% trans "Email Addresses" %}</a></li>
         {% ifsetting ACCOUNT_USE_OPENID %}
-            <li><a href="/openid/associations/">{% trans "OpenID Associations" %}</a></li>
+            <li><a href="/openid/associations/"><i class="icon-th"></i> &nbsp; {% trans "OpenID" %}</a></li>
         {% endifsetting %}
         {% if user.password %}
-        <li><a href="{% url "acct_passwd" %}">{% trans "Change Password" %}</a></li>
+        <li><a href="{% url "acct_passwd" %}"><i class="icon-lock"></i> &nbsp; {% trans "Change Password" %}</a></li>
         {% else %}
-        <li><a href="{% url "acct_passwd_set" %}">{% trans "Set Password" %}</a></li>
+        <li><a href="{% url "acct_passwd_set" %}"><i class="icon-lock"></i> &nbsp; {% trans "Set Password" %}</a></li>
         {% endif %}
         {% if user.password and request.openids %}
-        <li><a href="{% url "acct_passwd_delete" %}">{% trans "Delete Password" %}</a></li>
+        <li><a href="{% url "acct_passwd_delete" %}"><i class="icon-lock"></i> &nbsp; {% trans "Delete Password" %}</a></li>
         {% endif %}
         {% ifsetting USE_I18N %}
-            <li><a href="{% url "acct_language_change" %}">{% trans "Language" %}</a></li>
+            <li><a href="{% url "acct_language_change" %}"><i class="icon-picture"></i> &nbsp; {% trans "Language" %}</a></li>
         {% endifsetting %}
-        <li><a href="{% url "acct_timezone_change" %}">{% trans "Timezone" %}</a></li>
+        <li><a href="{% url "acct_timezone_change" %}"><i class="icon-time"></i> &nbsp; {% trans "Timezone" %}</a></li>
+        <li><a href="/friends/invitations/received/" ><i class="icon-arrow-down"></i> &nbsp; {% trans "Received Requests" %}</a></li>
+        <li><a href="/friends/invitations/sent/"><i class="icon-arrow-up"></i> &nbsp; {% trans "Sent Requests" %}</a></li>
+        <li><a href="/friends/blocked/"><i class="icon-ban-circle"></i> &nbsp; {% trans "Blocked users" %}</a></li>
     </ul>
 {% endblock %}
+
