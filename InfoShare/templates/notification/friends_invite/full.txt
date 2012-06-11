@@ -1,0 +1,4 @@
+{% load i18n %}{% url friends_received_invitations as invitations_page %}{% blocktrans with invitation.from_user as invitation_from_user %}{{ invitation_from_user }} has requested to add you as a friend. You can accept their invitation at:
+
+http://{{ current_site }}{{ invitations_page }}
+{% endblocktrans %}

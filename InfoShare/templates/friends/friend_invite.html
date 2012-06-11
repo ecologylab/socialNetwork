@@ -1,0 +1,15 @@
+{% extends 'friends/base.html' %}
+{% load i18n %}
+
+{% block friends_title %}{% blocktrans %}Invite {{ friend }} to your friends{% endblocktrans %}{% endblock %}
+
+{% block friends_content %}
+<div style="text-align:center">
+<form action="" method="post">{% csrf_token %}
+	<fieldset>
+		{{ form.as_p }}
+	</fieldset>
+	<input type="submit" value="{% trans "Invite" %}" />
+</form>
+</div>
+{% endblock %}

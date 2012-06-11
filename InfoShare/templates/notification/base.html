@@ -10,9 +10,9 @@
 {% block body_class %}notices{% endblock %}
 
 {% block subnav %}
-    <ul class="nav nav-list">
+    <ul class="nav nav-pills nav-stacked">
         <li class="nav-header">{% trans "Notices" %}</li>
-        <li><a href="{% url "notification_notices" %}">{% trans "Notices" %}</a></li>
-        <li><a href="{% url "notification_notice_settings" %}">{% trans "Settings" %}</a></li>
+        <li><a href="{% url "notification_notices" %}"><i class="icon-flag"></i> &nbsp;{% trans "Notices" %}</a></li>
+        <li><a href="{% url "notification_notice_settings" %}"><i class="icon-wrench"></i> &nbsp;{% trans "Settings" %}</a></li>
     </ul>
 {% endblock %}

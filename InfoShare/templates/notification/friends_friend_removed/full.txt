@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans %}{{ removed_friend }} was removed from your friends.{% endblocktrans %}

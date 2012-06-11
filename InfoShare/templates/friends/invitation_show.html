@@ -1,0 +1,25 @@
+{% extends 'friends/base.html' %}
+{% load i18n %}
+
+{% block friends_title %}
+{% if user == invitation.to_user %}{% blocktrans with invitation.from_user as from_user %}Friends request from {{ from_user }}{% endblocktrans %}{% endif %}
+{% if user == invitation.from_user %}{% blocktrans with invitation.to_user as to_user %}Friends request to {{ to_user }}{% endblocktrans %}{% endif %}
+{% endblock %}
+
+{% block friends_content %}
+<div style="text-align:center">
+
+<h2>	{{ invitation.message }} </h2>
+<br/> 
+	<p class="buttons" >
+		{% if user == invitation.to_user %}
+			<a href="{% url friends_accept_invitation invitation.pk %}" class="btn btn-success"> <i class="icon-ok icon-white"></i> &nbsp;{% trans "Accept" %}</a>
+			<a href="{% url friends_decline_invitation invitation.pk %}" class="btn btn-danger"> <i class="icon-remove icon-white"></i> &nbsp;{% trans "Decline" %}</a>
+			<a href="{% url friends_block_user invitation.from_user.username %}" class="btn btn-inverse"><i class="icon-ban-circle icon-white"></i> &nbsp;{% trans "Decline and block" %}</a>
+		{% endif %}
+		{% if user == invitation.from_user %}
+			<a href="{% url friends_remove_invitation invitation.pk %}" class="btn btn-danger"> <i class="icon-remove icon-white"></i> &nbsp;{% trans "Delete" %}</a>
+		{% endif %}
+	</p>
+</div>
+{% endblock %}

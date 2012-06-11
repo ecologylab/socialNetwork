@@ -1,0 +1,37 @@
+{% extends "subnav_base.html" %}
+
+{% load i18n %}
+{% load url from future %}
+
+{% block head_title %}{{ username }}{% endblock %}
+
+{% block body_class %}Home{% endblock %}
+
+{% block subnav %}
+    {% if user.is_authenticated %}
+        <ul class="nav nav-pills nav-stacked">
+            
+            <li><a href="{% url "profile_detail" user.username %}"  > <i class="icon-picture"></i> &nbsp; {% trans "Profile" %}</a></li>
+           
+            <li> <a href="/account/email/">  <i class="icon-user"></i> &nbsp;  {% trans "Account" %}</a></li> 
+           
+            <li><a href="/notices/" > <i class="icon-flag"></i> &nbsp; {% trans "Notifications" %}</a></li>
+            
+            <li><a href="/friends/" > <i class="icon-plane"></i> &nbsp; {% trans "Friends" %}</a></li>
+            
+            <li><a href="/messages/" > <i class="icon-envelope"></i> &nbsp; {% trans "Messages" %}</a></li>
+         
+        </ul>
+    
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+<div style="text-align:left">
+    <p> 
+      <h2> Welcome, {{ username }} </h2>
+      <h4> Your email adress is  {{ email }} </h4> 
+     </p>   
+    </div>
+{% endblock %}
+

@@ -1,0 +1,16 @@
+{% extends 'account/base.html' %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Blocked users" %}{% endblock %}
+
+{% block body %}
+
+   
+<ul>
+{% for friend in friends %}
+	<li><a href="{% url profile_detail username=friend.username %}">{{ friend }}</a>  &nbsp; &nbsp; <a href="{% url friends_unblock_user friend.username %}" class="btn">{% trans "unblock" %}</a></li>
+        <br/>
+{% endfor %}
+</ul>
+
+{% endblock %}

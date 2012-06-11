@@ -1,0 +1,15 @@
+{% extends "messages/base.html" %} 
+{% load i18n %} 
+{% block body %}
+<h2>{% trans "Compose"%}</h2>
+<br/>
+<br/>
+<form action="" method="post">
+{% csrf_token %} 
+<table>
+{{ form.as_table }}
+</table>
+<input type="submit" value="{% trans "Send" %} &raquo;"/>
+</form>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
-
+from apps.userpage.views import *
 from django.contrib import admin
 admin.autodiscover()
 
@@ -12,15 +12,17 @@ handler500 = "pinax.views.server_error"
 
 
 urlpatterns = patterns("",
-    url(r"^$", direct_to_template, {"template": "homepage.html",}, name="home"),
+    url(r"^$", user_home, name="home"),
     url(r"^admin/invite_user/$", "pinax.apps.signup_codes.views.admin_invite_user", name="admin_invite_user"),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^account/", include("pinax.apps.account.urls")),
     url(r"^openid/", include(PinaxConsumer().urls)),
     url(r"^profiles/", include("idios.urls")),
     url(r"^notices/", include("notification.urls")),
+    url(r'^friends/', include('friends.urls')),
     url(r"^announcements/", include("announcements.urls")),
-    url(r"^userpage/", direct_to_template, {"template" : "user/user_profile.html",}, name="userpage"),
+    url(r"^messages/", include('messages.urls')),
+    
 )
 
 

@@ -52,7 +52,7 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = True
+USE_I18N = False
 
 
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, "site_media", "media")
@@ -167,7 +167,9 @@ INSTALLED_APPS = [
     
     # project
     "profiles",
-
+    "userpage",
+    "friends",
+    "messages",
 ]
 
 FIXTURE_DIRS = [
@@ -188,6 +190,11 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 EMAIL_BACKEND = "mailer.backend.DbBackend"
 
+
+FRIENDS_USE_NOTIFICATION_APP = True
+SHOW_FRIENDS_OF_FRIEND = True
+NOTIFY_ABOUT_NEW_FRIENDS_OF_FRIEND = True
+NOTIFY_ABOUT_FRIENDS_REMOVAL = True
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_USE_OPENID = True
 ACCOUNT_REQUIRED_EMAIL = True
@@ -200,7 +207,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
-LOGIN_REDIRECT_URLNAME = "userpage"
+LOGIN_REDIRECT_URLNAME = "home"
 LOGOUT_REDIRECT_URLNAME = "home"
 
 EMAIL_CONFIRMATION_DAYS = 2

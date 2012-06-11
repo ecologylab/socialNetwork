@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans %}Your friend {{ your_friend }} and {{ new_friend }} are now friends.{% endblocktrans %}
