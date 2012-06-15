@@ -1,5 +1,13 @@
 {% load i18n %}
+{% load avatar_tags %}
 <div class="profile_info">
+    </br>
+    {% if is_me %}
+    {% avatar user 70 %} &nbsp; &nbsp;  <a href="/avatar/change/" class="btn btn-primary"> <i class="icon-share-alt icon-white"></i> &nbsp; Change Picture</a></p> 
+    {% else %} 
+    {% avatar user 70 %}
+    {% endif %}
+    </br>
     </br>
     {% if profile.name %}<p><b>{% trans "Name" %}</b>: {{ profile.name }}</p>{% endif %}
     {% if profile.about %}<p><b>{% trans "About" %}</b>: {{ profile.about }}</p>{% endif %}

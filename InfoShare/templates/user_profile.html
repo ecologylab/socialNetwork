@@ -11,7 +11,7 @@
     {% if user.is_authenticated %}
         <ul class="nav nav-pills nav-stacked">
             
-            <li><a href="{% url "profile_detail" user.username %}"  > <i class="icon-picture"></i> &nbsp; {% trans "Profile" %}</a></li>
+            <li><a href="{% url "profile_detail" user.username %}"  > <i class="icon-th-large"></i> &nbsp; {% trans "Profile" %}</a></li>
            
             <li> <a href="/account/email/">  <i class="icon-user"></i> &nbsp;  {% trans "Account" %}</a></li> 
            
@@ -20,6 +20,8 @@
             <li><a href="/friends/" > <i class="icon-plane"></i> &nbsp; {% trans "Friends" %}</a></li>
             
             <li><a href="/messages/" > <i class="icon-envelope"></i> &nbsp; {% trans "Messages" %}</a></li>
+            
+            <li><a href="/avatar/change/"  > <i class="icon-picture"></i> &nbsp; {% trans "Display Picture" %}</a></li>
          
         </ul>
     

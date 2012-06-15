@@ -22,7 +22,7 @@
 			</td>
 			<td>{{ invitation.sent }}</td>
 			<td>
-				<a href="{% url friends_show_invitation invitation.pk %}">{% trans "Details" %}</a>
+				<a href="{% url friends_show_invitation invitation.pk %}" class="btn btn-primary">{% trans "Details" %}</a>
 			</td>
 		</tr>{% endfor %}
 		

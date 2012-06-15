@@ -4,9 +4,10 @@ from django.views.generic.simple import direct_to_template
 from apps.userpage.views import *
 from django.contrib import admin
 admin.autodiscover()
-
+import os
 from pinax.apps.account.openid_consumer import PinaxConsumer
-
+static = os.path.join(os.path.dirname(__file__),"site_media","static")
+media = os.path.join(os.path.dirname(__file__),"site_media","media")
 
 handler500 = "pinax.views.server_error"
 
@@ -20,6 +21,8 @@ urlpatterns = patterns("",
     url(r"^profiles/", include("idios.urls")),
     url(r"^notices/", include("notification.urls")),
     url(r'^friends/', include('friends.urls')),
+    url(r'^avatar/', include('avatar.urls')),
+    url(r'^avatar_crop/', include('avatar_crop.urls')),
     url(r"^announcements/", include("announcements.urls")),
     url(r"^messages/", include('messages.urls')),
     
@@ -28,5 +31,6 @@ urlpatterns = patterns("",
 
 if settings.SERVE_MEDIA:
     urlpatterns += patterns("",
-        url(r"", include("staticfiles.urls")),
+        url(r'^static/(?P<path>.*)$', 'django.views.static.serve',{'document_root': static}),
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve',{'document_root': media}),
     )

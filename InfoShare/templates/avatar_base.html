@@ -1,0 +1,55 @@
+{% extends "subnav_base.html" %}
+{% block head_title %} Display Picture {% endblock %}
+
+
+{% block extra_style %}
+<style type="text/css">
+           
+            .av_container {
+                width:740px;
+                margin: 0 auto;
+                padding: 0;
+                text-align:left;
+            }
+            .av_left_column {
+                float: left;
+                width: 490px;
+            }
+            .av_right_column {
+                float: left:
+                width: 250px;
+            }
+        </style>
+{% endblock %}
+
+
+{% block subnav %}
+    {% if user.is_authenticated %}
+        <ul class="nav nav-pills nav-stacked">
+            <li class="nav-header">Display Picture</li>
+            <li><a href="/avatar/change/"  > <i class="icon-picture"></i> &nbsp; Change Picture </a></li>
+           
+            <li> <a href="/avatar/add/">  <i class="icon-plus-sign"></i> &nbsp;  Add Picture </a></li> 
+           
+            <li><a href="/avatar/delete/" > <i class="icon-trash"></i> &nbsp;  Delete Picture </a></li>
+           
+        </ul>
+    
+    {% endif %}
+{% endblock %}
+
+ 
+{% block body %}
+{% block body_profile %}
+{% endblock %}
+{% endblock %}
+
+{% block extra_script %}  <script type="text/javascript" src="{{ STATIC_URL }}avatar_crop/js/jquery-1.4.2.min.js"></script> {% endblock %}
+
+
+
+
+
+
+
+
