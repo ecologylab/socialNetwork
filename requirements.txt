@@ -10,7 +10,6 @@ Pinax
 psycopg2
 
 django-debug-toolbar==0.9.1
-django-staticfiles==1.2.1
 django_compressor==1.1.2
 django-friendship
 

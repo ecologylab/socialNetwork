@@ -9,7 +9,6 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-# tells Pinax to serve media through the staticfiles app.
 SERVE_MEDIA = DEBUG
 
 # django-compressor is turned off by default due to deployment overhead for
@@ -37,44 +36,29 @@ DATABASES = {
     }
 }
 
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# If running in a Windows environment this must be set to the same as your
-# system time zone.
+
 TIME_ZONE = "US/Eastern"
-
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = "en-us"
-
 SITE_ID = 1
-
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
 USE_I18N = False
 
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, "site_media", "media")
-STATIC_ROOT = os.path.join(PROJECT_ROOT, "site_media", "static")
+MEDIA_ROOT = os.path.join(PROJECT_ROOT,"site_media","media")
+STATIC_ROOT = ""
 
-
-MEDIA_URL = os.path.join(PROJECT_ROOT, "site_media", "media")
-STATIC_URL = os.path.join(PROJECT_ROOT, "static/")
-
-
+MEDIA_URL = "/media/"
+STATIC_URL = "/static/"
 
 
 # Additional directories which hold static files
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, "static"),
+   os.path.join(PROJECT_ROOT, "site_media","static"),
+   os.path.join(PROJECT_ROOT, "site_media", "media"),
 ]
 
 STATICFILES_FINDERS = [
-    "staticfiles.finders.FileSystemFinder",
-    "staticfiles.finders.AppDirectoriesFinder",
-    "staticfiles.finders.LegacyAppDirectoriesFinder",
-    "compressor.finders.CompressorFinder",
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
@@ -104,7 +88,6 @@ MIDDLEWARE_CLASSES = [
     "pinax.apps.account.middleware.LocaleMiddleware",
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     "pagination.middleware.PaginationMiddleware",
-#    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.csrf.CsrfResponseMiddleware",
 ]
 
@@ -121,11 +104,9 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
-    
-    "staticfiles.context_processors.static",
-    
+    "django.core.context_processors.static",
+
     "pinax.core.context_processors.pinax_settings",
-    
     "pinax.apps.account.context_processors.account",
     
     "notification.context_processors.notification",
@@ -141,13 +122,12 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
-    
+    "django.contrib.staticfiles",    
     "pinax.templatetags",
     
       
     # external
     "notification",
-    "staticfiles",
     "compressor",
     "debug_toolbar",
     "mailer",
@@ -170,27 +150,26 @@ INSTALLED_APPS = [
     "userpage",
     "friends",
     "messages",
+    "avatar",
+    "avatar_crop",
 ]
 
 FIXTURE_DIRS = [
     os.path.join(PROJECT_ROOT, "fixtures"),
 ]
 
-ABSOLUTE_URL_OVERRIDES = {                                                                                                                                                                     
-     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,                                                                                                                               
-}                                                                                                                                                                                              
-                                                                                                                                                                                               
-AUTH_PROFILE_MODULE = "profiles.Profile"                                                                                                                                                       
+ABSOLUTE_URL_OVERRIDES = {                                                                                                                                                                   
+     "auth.user": lambda o: "/profiles/profile/%s/" % o.username,                                                                                                                            
+}                                                                                                                                                                                            
+                                                                                                                                                                                             
+AUTH_PROFILE_MODULE = "profiles.Profile"                                                                                                                                                     
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"  
-
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
-
-
 EMAIL_BACKEND = "mailer.backend.DbBackend"
 
-
+#AVATAR_STORAGE_DIR = os.path.join(PROJECT_ROOT, "site_media", "media","avatars")
 FRIENDS_USE_NOTIFICATION_APP = True
 SHOW_FRIENDS_OF_FRIEND = True
 NOTIFY_ABOUT_NEW_FRIENDS_OF_FRIEND = True
@@ -206,7 +185,7 @@ AUTHENTICATION_BACKENDS = [
     "pinax.apps.account.auth_backends.AuthenticationBackend",
 ]
 
-LOGIN_URL = "/account/login/" # @@@ any way this can be a url name?
+LOGIN_URL = "/account/login/" 
 LOGIN_REDIRECT_URLNAME = "home"
 LOGOUT_REDIRECT_URLNAME = "home"
 

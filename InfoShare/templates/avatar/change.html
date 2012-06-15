@@ -1,0 +1,35 @@
+{% extends "avatar/base.html" %}
+{% load avatar_tags %}
+{% load bootstrap_tags %}
+
+{% block body_profile %}
+    
+    {% if not avatars %}
+    <h4> This is your last or default picture, You haven't uploaded a picture yet or you don't have a profile picture. Please upload one now </h4>
+    {% else %}
+    <h3> Your current picture: </h3>
+    {% endif %}
+    <br/>
+    {% avatar user %}
+    &nbsp;  &nbsp; 
+    {% if avatars %}
+    <a href="{% url avatar_crop_default %}" class="btn btn-info"> Crop </a>
+    {% endif %}
+    <br/>
+    <br/>
+    {% if not avatars %}
+        <p> </p>
+    {% else %}
+        <form method="POST" action="">
+            <ul>
+                {{ primary_avatar_form|as_bootstrap }}
+            </ul>
+            <input type="submit"  class="btn btn-info" value="Choose new Default" />
+        </form>
+    {% endif %}
+    <br/>
+   
+    <h3> You can  upload a new picture <a href="/avatar/add/"> here </a>  </h3>
+{% endblock %}
+
+
