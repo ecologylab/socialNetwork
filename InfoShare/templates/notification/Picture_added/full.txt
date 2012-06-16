@@ -1,0 +1,4 @@
+{% load i18n %}{% blocktrans with avatar.get_absolute_url as avatar_url %} You have successfully added new profile picture.  {{ avatar }}
+
+http://{{ current_site }}{{ avatar_url }}
+{% endblocktrans %}

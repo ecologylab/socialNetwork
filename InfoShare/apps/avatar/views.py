@@ -12,6 +12,10 @@ from avatar.settings import AVATAR_MAX_AVATARS_PER_USER, AVATAR_DEFAULT_SIZE
 from avatar.signals import avatar_updated
 from avatar.util import get_primary_avatar, get_default_avatar_url
 
+if "notification" in settings.INSTALLED_APPS:
+    from notification import models as notification
+else:
+    notification = None
 
 def _get_next(request):
     """
@@ -71,6 +75,8 @@ def add(request, extra_context=None, next_override=None,
             request.user.message_set.create(
                 message=_("Successfully uploaded a new avatar."))
             avatar_updated.send(sender=Avatar, user=request.user, avatar=avatar)
+            if notification:
+                notification.send([request.user], "Picture_added", {'message': "You have successfully added new profile picture.",})
             return HttpResponseRedirect(next_override or _get_next(request))
     return render_to_response(
             'avatar/add.html',
@@ -110,6 +116,8 @@ def change(request, extra_context=None, next_override=None,
                 message=_("Successfully updated your avatar."))
         if updated:
             avatar_updated.send(sender=Avatar, user=request.user, avatar=avatar)
+            if notification:
+                notification.send([request.user], "Picture_updated", {'message': "You have successfully updated your profile picture.",})
         return HttpResponseRedirect(next_override or _get_next(request))
     return render_to_response(
         'avatar/change.html',
