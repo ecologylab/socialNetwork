@@ -152,6 +152,7 @@ INSTALLED_APPS = [
     "messages",
     "avatar",
     "avatar_crop",
+    "infocomposition",
 ]
 
 FIXTURE_DIRS = [

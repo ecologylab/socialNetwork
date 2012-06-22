@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
 from apps.userpage.views import *
+from apps.infocomposition.views import *
 from django.contrib import admin
 admin.autodiscover()
 import os
@@ -18,6 +19,7 @@ urlpatterns = patterns("",
     url(r"^admin/", include(admin.site.urls)),
     url(r"^account/", include("pinax.apps.account.urls")),
     url(r"^openid/", include(PinaxConsumer().urls)),
+    url(r"^infocomp/", include("infocomposition.urls")),
     url(r"^profiles/", include("idios.urls")),
     url(r"^notices/", include("notification.urls")),
     url(r'^friends/', include('friends.urls')),
