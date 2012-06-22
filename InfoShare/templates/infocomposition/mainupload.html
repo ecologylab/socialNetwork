@@ -1,0 +1,26 @@
+{% extends "infocomposition/base.html" %}
+{% load bootstrap_tags %}
+
+{% block head_title %} Upload {% endblock %}
+
+
+{% block body %}
+
+
+
+<form enctype="multipart/form-data" class="form-horizontal" method="POST" action="">
+
+{{ form|as_bootstrap }}
+
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="submit" class="btn btn-primary" value="Upload" />
+
+</form>
+
+
+
+
+{% endblock %}
+
+
+

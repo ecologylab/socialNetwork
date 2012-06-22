@@ -1,0 +1,47 @@
+{% extends 'infocomposition/base.html' %}
+
+{% load infocomposition_tags %}
+
+{% block head_title %} By {{ user.username }}{% endblock %}
+
+
+{% block body %}
+
+<table class="table table-condensed">
+	<thead>
+		<tr>
+			<th> Name </th>
+			<th> Thumbnail </th>
+			<th> Description </th>
+			<th> Download </th>
+			<th> Delete </th>
+		
+		</tr>
+	</thead>
+	<tbody>{% for infocomp in infocomps %}
+	
+		<tr>
+			<td>
+				{{ infocomp.name }}
+			</td>
+			<td>
+			     Thumbnail
+			</td>
+			<td>
+				{{ infocomp.description }}
+			</td>
+			<td>
+		        <a href="{% url download pk=infocomp.pk %}" class="btn btn-success"> <i class="icon-download-alt icon-white"></i> &nbsp; Download </a>
+			</td>
+			<td>
+		        <a href="{% url delete pk=infocomp.pk %}" class="btn btn-danger"> <i class="icon-remove icon-white"></i> &nbsp; Delete </a>
+			</td>
+			
+		</tr>{% endfor %}
+		
+	</tbody>
+</table>
+
+
+{% endblock %}
+

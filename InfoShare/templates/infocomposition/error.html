@@ -1,0 +1,16 @@
+{% extends "subnav_base.html" %}
+
+{% block body %}
+
+
+{% block head_title %} Error {% endblock %}
+
+
+
+{% if error_message %}
+
+<h2> {{ error_message }} </h2>
+
+{% endif %}
+
+{% endblock %}
