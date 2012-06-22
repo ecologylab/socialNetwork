@@ -1,5 +1,4 @@
 import os
-from shutil import rmtree
 from apps.infocomposition.forms import *
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
@@ -31,14 +30,14 @@ def InfoAdd(request):
                 tag,created = Tag.objects.get_or_create(tag=tag_name)
                 infocomposition.tags.add(tag) 
             infocomposition.save()
-            infocomposition.unzip_icom()
-            infocomposition.add_filename()
+            infocomposition.unzip_and_generate()
             return HttpResponseRedirect("/infocomp/add")          
     else:
         info_form = InfoForm()
     variables = RequestContext(request, {'form' : info_form})
     return render_to_response('infocomposition/mainupload.html',variables)
     
+
     
 @login_required
 def InfoList(request):
@@ -59,21 +58,29 @@ def DownloadInfoComp(request,pk):
 
     """
     infocomposition = InfoComposition.objects.get(pk=pk)
-    infocomp = infocomposition.infocomp.name
-    infocomp_base = os.path.basename(infocomp)
-    username = request.user.username
-    file_path = os.path.join(MEDIA_ROOT,"infocomp",username,infocomp_base)   
-    if os.path.isfile(file_path):     
-        wrapper = FileWrapper(open(file_path))  
-        response = HttpResponse(wrapper,mimetype='application/force-download')
-        response['Content-Length']  = os.path.getsize(file_path)
-        response['Content-Disposition'] = "attachment; filename=%s" % infocomp_base 
-        return response
+    userid = request.user.id
+    infocomp_user = infocomposition.user_id 
+    if userid == infocomp_user:
+        infocomp = infocomposition.infocomp.name
+        infocomp_base = os.path.basename(infocomp)
+        username = request.user.username
+        file_path = os.path.join(MEDIA_ROOT,"infocomp",username,infocomp_base)   
+        if os.path.isfile(file_path):     
+            wrapper = FileWrapper(open(file_path))  
+            response = HttpResponse(wrapper,mimetype='application/force-download')
+            response['Content-Length']  = os.path.getsize(file_path)
+            response['Content-Disposition'] = "attachment; filename=%s" % infocomp_base 
+            return response
+        else:
+            error_message = u"File not found"
+            variables = RequestContext(request,{'error_message' : error_message})
+            return render_to_response("infocomposition/error.html",variables)
     else:
-        error_message = u"File not found"
-        variables = RequestContext(request,{'error_message' : error_message})
+        error_message = u"Forbidden"
+        variables = RequestContext(request, {'error_message' : error_message})
         return render_to_response("infocomposition/error.html",variables)
-       
+
+           
     
    
 @login_required
@@ -89,24 +96,12 @@ def DeleteInfoComp(request,pk):
     infocomp_user = infocomposition.user_id
     if userid == infocomp_user:
         name = infocomposition.name
-        infocomp_name = infocomposition.infocomp.name
-        infocomp_with_ext = os.path.basename(infocomp_name)
-        infocomp_file = os.path.splitext(infocomp_with_ext)[0]
-        infocomp_path = os.path.join(MEDIA_ROOT,infocomp_name)  
-        infocomp_dirpath = os.path.join(MEDIA_ROOT,"infocomp",username,infocomp_file)        
-        if os.path.isfile(infocomp_path):
-            os.remove(infocomp_path)
-        if os.path.isdir(infocomp_dirpath): 
-            rmtree(infocomp_dirpath)
         infocomposition.delete()
         success_message = u"You have successfully removed information compostion %s" % name     
         return HttpResponseRedirect("/infocomp/list")
     else: 
-        error_message = u"You don't own this information composition, hence can not be deleted"
+        error_message = u"Forbidden"
         variables = RequestContext(request, {'error_message' : error_message})
         return render_to_response("infocomposition/error.html",variables) 
     
  
-
-
-

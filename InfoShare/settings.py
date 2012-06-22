@@ -95,6 +95,7 @@ ROOT_URLCONF = "InfoShare.urls"
 
 TEMPLATE_DIRS = [
     os.path.join(PROJECT_ROOT, "templates"),
+    os.path.join(PROJECT_ROOT, "site_media", "media","infocomp"),
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = [
