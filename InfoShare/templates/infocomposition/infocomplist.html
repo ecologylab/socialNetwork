@@ -22,10 +22,12 @@
 	
 		<tr>
 			<td>
-				{{ infocomp.name }}
+				<a href="{% get_html_path infocomp.user_id infocomp.pk %}">{{ infocomp.name }}</a>
 			</td>
 			<td>
-			     Thumbnail
+			         
+		       <a href="{% get_html_path infocomp.user_id infocomp.pk %}"><img border="0" alt="" src="{% media_url %}/{{ infocomp.thumbnail }}" width="150" /></a>
+			         
 			</td>
 			<td>
 				{{ infocomp.description }}

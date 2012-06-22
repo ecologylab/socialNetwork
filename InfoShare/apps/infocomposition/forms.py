@@ -6,11 +6,11 @@ from apps.infocomposition.models import *
 class InfoForm(forms.ModelForm):
 
     infocomp = forms.FileField(label="Information Composition", help_text="Add .icom Information composition File")
-    tags = forms.CharField(label=u"Tags", help_text="Add tags, separate them with comma")
-
+    tags = forms.CharField(label=u"Tags", help_text="Add tags, separate them with comma")     
+ 
     class Meta:
         model = InfoComposition
-        exclude = ('user','filename')
+        exclude = ('user','filename','thumbnail')
      
     def clean_infocomp(self):
         infocomp = self.cleaned_data['infocomp']
