@@ -9,7 +9,7 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-SERVE_MEDIA = DEBUG
+SERVE_MEDIA = True
 
 # django-compressor is turned off by default due to deployment overhead for
 # most users. See <URL> for more information
@@ -140,7 +140,7 @@ INSTALLED_APPS = [
     "idios",
     "metron",
     "django_forms_bootstrap", 
-   
+ 
     # Pinax
     "pinax.apps.account",
     "pinax.apps.signup_codes",

@@ -20,6 +20,18 @@ class InfoForm(forms.ModelForm):
         if not ext == ".icom":
             raise forms.ValidationError("Pleae upload a Information composition icom file") 
         else:
+            infocomp.name = filename.replace(" ","_")
             return infocomp
-   
 
+class EditForm(forms.Form):
+  
+    tags = forms.CharField(label=u"Tags", help_text="Add tags, separate them with comma")     
+ 
+    class Meta:
+        model = InfoComposition
+        exclude = ('user','filename','infocomp','thumbnail')
+      
+ 
+    
+
+   

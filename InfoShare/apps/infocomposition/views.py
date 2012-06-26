@@ -63,13 +63,12 @@ def DownloadInfoComp(request,pk):
     if userid == infocomp_user:
         infocomp = infocomposition.infocomp.name
         infocomp_base = os.path.basename(infocomp)
-        username = request.user.username
-        file_path = os.path.join(MEDIA_ROOT,"infocomp",username,infocomp_base)   
+        file_path = os.path.join(MEDIA_ROOT,infocomp)   
         if os.path.isfile(file_path):     
             wrapper = FileWrapper(open(file_path))  
             response = HttpResponse(wrapper,mimetype='application/force-download')
             response['Content-Length']  = os.path.getsize(file_path)
-            response['Content-Disposition'] = "attachment; filename=%s" % infocomp_base 
+            response['Content-Disposition'] = "attachment; filename=%s" % infocomp_base
             return response
         else:
             error_message = u"File not found"
@@ -96,12 +95,55 @@ def DeleteInfoComp(request,pk):
     infocomp_user = infocomposition.user_id
     if userid == infocomp_user:
         name = infocomposition.name
-        infocomposition.delete()
-        success_message = u"You have successfully removed information compostion %s" % name     
+        infocomposition.delete()   
         return HttpResponseRedirect("/infocomp/list")
     else: 
         error_message = u"Forbidden"
         variables = RequestContext(request, {'error_message' : error_message})
         return render_to_response("infocomposition/error.html",variables) 
     
- 
+
+def PublicList(request):
+    """
+    Public List of Information Compositions
+
+    """
+    infocomposition = InfoComposition.objects.filter(private=False) 
+    variables = RequestContext(request,{'infocomps' : infocomposition})
+    return render_to_response("infocomposition/publiclist.html",variables)
+
+def PublicDownload(request,pk):
+    """
+    Public Download Option, Without checking whether user owns information composition or not
+
+    """
+    infocomposition = InfoComposition.objects.get(pk=pk)
+    infocomp = infocomposition.infocomp.name
+    infocomp_base = os.path.basename(infocomp)
+    file_path = os.path.join(MEDIA_ROOT,infocomp)   
+    if os.path.isfile(file_path):     
+        wrapper = FileWrapper(open(file_path))  
+        response = HttpResponse(wrapper,mimetype='application/force-download')
+        response['Content-Length']  = os.path.getsize(file_path)
+        response['Content-Disposition'] = "attachment; filename=%s" % infocomp_base
+        return response
+    else:
+        error_message = u"File not found"
+        variables = RequestContext(request,{'error_message' : error_message})
+        return render_to_response("infocomposition/error.html",variables)
+    
+@login_required
+def CompositionPage(request,pk):
+    infocomp = InfoComposition.objects.get(pk=pk)
+    variables = RequestContext(request, {'infocomp' : infocomp })
+    return render_to_response("infocomposition/infocomposition.html",variables)
+
+@login_required
+def UserComposition(request,pk):
+    user = User.objects.get(pk=pk)
+    user_id = user.id
+    username = user.username
+    infocomp = InfoComposition.objects.filter(user=user_id,private=False)
+    variables = RequestContext(request,{'infocomps' : infocomp,'username' : username})
+    return render_to_response("infocomposition/infouser.html",variables)
+      
