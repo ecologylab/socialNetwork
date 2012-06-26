@@ -1,0 +1,51 @@
+{% extends 'infocomposition/base.html' %}
+
+{% load infocomposition_tags %}
+
+{% block head_title %} {{ infocomp.name }} {% endblock %}
+
+
+{% block body %}
+
+
+<a href="{% get_html_path infocomp.user_id infocomp.pk %}" target="_blank"><img border="0" alt="" src="{% media_url %}/{{ infocomp.thumbnail }}" width="150" /></a>
+&nbsp;
+{% if infocomp.user_id = request.user.id  %}
+<a href="{% url download pk=infocomp.pk %}" class="btn btn-success"> <i class="icon-download-alt icon-white"></i> &nbsp; Download </a>
+&nbsp;
+{% else %}
+<a href="{% url pdownload pk=infocomp.pk %}" class="btn btn-success"> <i class="icon-download-alt icon-white"></i> &nbsp; Download </a>
+&nbsp;
+{% endif %}
+
+{% if  infocomp.user_id = request.user.id  %}
+<a href="{% url delete pk=infocomp.pk %}" class="btn btn-danger"> <i class="icon-remove icon-white"></i> &nbsp; Delete </a>
+&nbsp;
+<a href="#" class="btn btn-primary"> <i class="icon-edit icon-white"></i> &nbsp; Edit Information </a>
+{% endif %}
+<br/>
+<br/>
+<a href="{% get_html_path infocomp.user_id infocomp.pk %}" target="_blank" class="btn btn-primary"> <i class="icon-fullscreen icon-white"></i> &nbsp; Full View </a>
+<br/>
+<br/>
+<br/>
+<h3> Name :- {{ infocomp.name }} </h3>
+<br/>
+<h3> Description :- {{ infocomp.description }} </h3>
+<br/>
+{% if not infocomp.user_id = request.user.id  %}
+<h3> By User :- <a href="/profiles/profile/{% get_user_name infocomp.user_id %}" >{% get_user_name infocomp.user_id %}</a> </h3>
+<br/>
+{% endif %}
+<h3> Tags :- 
+			{% for tag in infocomp.tags.all %}
+		       {{ tag }}
+		       {% if not forloop.last %}
+		       ,  
+		       {% endif %}
+		       {% endfor %}
+		       <h3>
+
+
+
+{% endblock %}

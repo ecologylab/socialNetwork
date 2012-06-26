@@ -1,0 +1,59 @@
+{% extends 'subnav_base.html' %}
+
+{% load infocomposition_tags %}
+{% load pagination_tags %}
+{% block head_title %} By {{ username }} {% endblock %}
+
+
+{% block body %}
+
+<div style="text-align: center">
+<h2> Information Compositions by {{ username }} </h2>
+
+<br/>
+<br/>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th> Name </th>
+			<th> Thumbnail </th>
+			<th> Description </th>
+			<th> Tags </th>
+		
+		</tr>
+	</thead>
+	{% autopaginate infocomps 6 %}
+	<tbody>{% for infocomp in infocomps %}
+	  
+		<tr>
+			<td>
+			    <a href="{% url compage pk=infocomp.pk %}">{{ infocomp.name }}</a>
+			</td>
+			<td>
+                  <img border="0" alt="" src="{% media_url %}/{{ infocomp.thumbnail }}" width="150" />
+			</td>
+			<td>
+		           {{ infocomp.description }}
+			</td>
+			<td>
+			
+			{% for tag in infocomp.tags.all %}
+		       {{ tag }}
+		       {% if not forloop.last %}
+		       ,  
+		       {% endif %}
+		       {% endfor %}
+           
+			</td>
+			
+		</tr>{% endfor %}
+         {% paginate %}
+		
+		
+	</tbody>
+</table>
+
+</div>
+{% endblock %}
+

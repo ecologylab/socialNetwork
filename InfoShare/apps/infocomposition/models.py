@@ -1,4 +1,5 @@
 import os
+import glob
 import zipfile
 from shutil import rmtree
 from tempfile import *
@@ -55,7 +56,9 @@ class InfoComposition(models.Model):
     
     def __unicode__(self):
         return (u"Information composition uploaded by %s") % self.user
-    
+  
+    class Meta:
+        ordering = ('-added',)   
   
     def save(self,*args,**kwargs):
         infocomp_path = self.infocomp.name
@@ -67,11 +70,24 @@ class InfoComposition(models.Model):
     def unzip_and_generate(self):
         infocomp_file = self.infocomp
         filename_with_ext = infocomp_file.name
-        filename = os.path.splitext(filename_with_ext)[0]
+        filename = os.path.splitext(filename_with_ext)[0]    
         file_base = os.path.basename(filename)
         mainfile = zipfile.ZipFile(infocomp_file)        
         mainfile.extractall(MEDIA_ROOT + "/" +  filename) 
-        image_name = file_base + ".jpg" 
+        mainfile.close()
+        infocomp_dir = os.path.join(MEDIA_ROOT,filename) 
+        os.chdir(infocomp_dir)
+        file_list = glob.glob("*.jpg")
+        length = len(file_list)
+        if length > 1:
+            for name in file_list:
+                if not name.endswith("_thumbnail.jpg"):
+                    image_name = name                 
+        elif length == 1:
+            image_name = file_list[0] 
+        else:
+            pass
+                    
         image_path = os.path.join(MEDIA_ROOT,filename,image_name)
         if os.path.isfile(image_path):                                  # Generate thumbnail if jpeg file exists
             im = PImage.open(image_path)
@@ -86,13 +102,9 @@ class InfoComposition(models.Model):
        
     def delete(self): 
         infocomp_name = self.infocomp.name
-        user_id = self.user_id
-        user_object = User.objects.get(pk=user_id)     
-        user_name = user_object.username
-        infocomp_with_ext = os.path.basename(infocomp_name)
-        infocomp_file = os.path.splitext(infocomp_with_ext)[0]
+        infocomp_dir_path = os.path.splitext(infocomp_name)[0]
         infocomp_path = os.path.join(MEDIA_ROOT,infocomp_name)              
-        infocomp_dirpath = os.path.join(MEDIA_ROOT,"infocomp",user_name,infocomp_file)
+        infocomp_dirpath = os.path.join(MEDIA_ROOT,infocomp_dir_path)
         thumb_path = os.path.join(MEDIA_ROOT,self.thumbnail.name)
              
         # Delete .icom file, if exists
