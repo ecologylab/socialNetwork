@@ -39,10 +39,4 @@ def get_html_path(user,pk):
         return html_path 
       
 
-@register.simple_tag
-def get_user_name(pk):
-    user = User.objects.get(pk=pk)
-    username = user.username
-    return username
-
 

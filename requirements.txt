@@ -13,6 +13,8 @@ django-debug-toolbar==0.9.1
 django_compressor==1.1.2
 django-friendship
 django-haystack==1.2.7
+xapian-haystack==1.1.5beta
+
 
 django-mailer==0.2a1
 django-email-confirmation==0.2

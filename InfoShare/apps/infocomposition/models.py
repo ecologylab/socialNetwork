@@ -55,7 +55,10 @@ class InfoComposition(models.Model):
     
     
     def __unicode__(self):
-        return (u"Information composition uploaded by %s") % self.user
+        return (u"Information composition %s") % self.name
+
+    def get_user_name(self):
+        return self.user
   
     class Meta:
         ordering = ('-added',)   

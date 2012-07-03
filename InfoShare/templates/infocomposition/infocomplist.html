@@ -18,7 +18,7 @@
 		
 		</tr>
 	</thead>
-	{% autopaginate infocomps 5 %}
+	{% autopaginate infocomps 10 %}
 	<tbody>{% for infocomp in infocomps %}
 	
 		<tr>
@@ -29,7 +29,7 @@
 		       {{ infocomp.description }}     
 			</td>
 			<td>				
-              <img border="0" alt="" src="{% media_url %}/{{ infocomp.thumbnail }}" width="150" />
+              <img border="0" alt="" src="{% media_url %}/{{ infocomp.thumbnail }}" width="120" />
 			</td>
 			<td>	
 			
