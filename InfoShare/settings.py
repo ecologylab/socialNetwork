@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Django settings for InfoShare project
 
-import os.path
+import os
 import posixpath
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -89,6 +89,7 @@ MIDDLEWARE_CLASSES = [
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     "pagination.middleware.PaginationMiddleware",
     "django.middleware.csrf.CsrfResponseMiddleware",
+#    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "InfoShare.urls"
@@ -139,6 +140,7 @@ INSTALLED_APPS = [
     "pagination",
     "idios",
     "metron",
+    "haystack",
     "django_forms_bootstrap", 
  
     # Pinax
@@ -193,6 +195,10 @@ LOGOUT_REDIRECT_URLNAME = "home"
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
+
+HAYSTACK_SITECONF = 'InfoShare.search_sites'
+HAYSTACK_SEARCH_ENGINE = 'xapian'
+HAYSTACK_XAPIAN_PATH = os.path.join(os.path.dirname(__file__), 'xapian_index')
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

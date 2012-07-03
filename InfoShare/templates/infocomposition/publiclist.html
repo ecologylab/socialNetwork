@@ -19,7 +19,7 @@
 		
 		</tr>
 	</thead>
-	{% autopaginate infocomps 6 %}
+	{% autopaginate infocomps 10 %}
 	<tbody>{% for infocomp in infocomps %}
 	  
 		<tr>
@@ -28,11 +28,11 @@
 			</td>
 			<td>
 			      
-			<a href="/profiles/profile/{% get_user_name infocomp.user_id %}" >{% get_user_name infocomp.user_id %}</a>
+			<a href="/profiles/profile/{{ infocomp.get_user_name }}" >{{ infocomp.get_user_name }}</a>
 			       
 			</td>
 			<td>
-              <img border="0" alt="" src="{% media_url %}/{{ infocomp.thumbnail }}" width="150" />
+              <img border="0" alt="" src="{% media_url %}/{{ infocomp.thumbnail }}" width="120" />
 			</td>
 			<td>
 		           {{ infocomp.description }}

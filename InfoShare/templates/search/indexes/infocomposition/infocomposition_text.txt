@@ -1,0 +1,4 @@
+{{ object.name }}
+{{ object.tags }}
+{{ object.description }}
+{{ object.filename }}

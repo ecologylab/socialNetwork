@@ -1,0 +1,108 @@
+{% extends 'subnav_base.html' %}
+{% load infocomposition_tags %}
+{% load pagination_tags %}
+{% load avatar_tags %}
+
+
+{% block head_title %} Search Results {% endblock %}
+
+{% block body %}
+{% if infocomps %}
+
+<table class="table table-striped">
+<h2> Information Compositions </h2>
+<br/>
+	<thead>
+		<tr>
+			<th> Name </th>
+			<th> By User </th>
+			<th> Thumbnail </th>
+			<th> Description </th>
+			<th> Tags </th>
+		
+		</tr>
+	</thead>
+	{% autopaginate infocomps 6 %}
+	<tbody>{% for infocomp in infocomps %}
+	  
+		<tr>
+			<td>
+			    <a href="{% url compage pk=infocomp.pk %}">{{ infocomp.name }}</a>
+			</td>
+			<td>
+			      
+			<a href="/profiles/profile/{{ infocomp.get_user_name }}" >{{ infocomp.get_user_name }}</a>
+			       
+			</td>
+			<td>
+              <img border="0" alt="" src="{% media_url %}/{{ infocomp.thumbnail }}" width="100" />
+			</td>
+			<td>
+		           {{ infocomp.description }}
+			</td>
+			<td>
+			
+			{% for tag in infocomp.tags.all %}
+		       {{ tag }}
+		       {% if not forloop.last %}
+		       ,  
+		       {% endif %}
+		       {% endfor %}
+           
+			</td>
+			
+		</tr>{% endfor %}
+         {% paginate %}
+		
+		
+	</tbody>
+</table>
+{% endif %}
+
+{% if users %}
+<h2> Users </h2>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th> Userame </th>
+			<th> Display </th>
+		
+		</tr>
+	</thead>
+	{% autopaginate users 5 %}
+	<tbody>{% for oneuser in users %}
+	  
+		<tr>
+			<td>
+			    <a href="{% url profile_detail oneuser.username %}"> {{ oneuser.username }}</a>
+			</td>
+			<td>
+			      {% avatar oneuser 70 %}
+			       
+			</td>
+		
+			
+		</tr>{% endfor %}
+         {% paginate %}
+		
+		
+	</tbody>
+</table>
+
+{% endif %}
+
+
+
+
+{% if not infocomps and not users %}
+<div style="text-align:center">
+<br/>
+<h2> No Results Found </h2>
+</div>
+{% endif %}
+
+
+
+
+
+{% endblock %}

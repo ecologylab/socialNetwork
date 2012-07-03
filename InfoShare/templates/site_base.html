@@ -1,14 +1,54 @@
 {% extends "theme_base.html" %}
 
+
 {% load metron_tags %}
 {% load i18n %}
+
+{% block extra_style %}
+<style>
+
+.navbar-search {
+    position: relative;
+    
+}
+  
+.navbar-search .search-query {
+    padding-left: 29px;
+}
+
+.navbar-search .icon-search {
+    position: absolute;
+    top: 7px;
+    left: 11px;
+    background-image: url("http://twitter.github.com/bootstrap/assets/img/glyphicons-halflings-white.png");
+}
+
+.navbar-search .search-query:focus, .navbar-search .search-query.focused {
+    padding-left: 30px;
+}
+
+.search-query:focus + .icon-search {
+    background-image: url("http://twitter.github.com/bootstrap/assets/img/glyphicons-halflings.png");
+}
+</style>
+
+{% endblock %}
+
 
 {% block nav %}
     {% if user.is_authenticated %}
         <ul class="nav">{% spaceless %}
             <li id="tab_profile"><a href="{% url profile_detail user.username %}">{% trans "Profile" %}</a></li>
             <li id="tab_notices"><a href="{% url notification_notices %}">{% trans "Notices" %}{% if notice_unseen_count %} ({{ notice_unseen_count }}){% endif %}</a></li>
-        {% endspaceless %}</ul>
+        </ul>
+       <form action="{% url search_list %}" method="get" class="navbar-search">
+       <input type="text" name="q" class="search-query span4" placeholder="Search Information Compositions and Users">
+       <div class="icon-search"></div>
+       </form>
+ 
+  
+
+        {% endspaceless %}
     {% endif %}
 {% endblock %}
 

@@ -34,7 +34,7 @@
 <h3> Description :- {{ infocomp.description }} </h3>
 <br/>
 {% if not infocomp.user_id = request.user.id  %}
-<h3> By User :- <a href="/profiles/profile/{% get_user_name infocomp.user_id %}" >{% get_user_name infocomp.user_id %}</a> </h3>
+<h3> By User :- <a href="/profiles/profile/{{ infocomp.get_user_name  }}" >{{ infocomp.get_user_name  }}</a> </h3>
 <br/>
 {% endif %}
 <h3> Tags :- 
