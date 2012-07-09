@@ -1,7 +1,7 @@
 import os
 from django import forms
 from apps.infocomposition.models import *
-
+from django.template.defaultfilters import slugify
 
 class InfoForm(forms.ModelForm):
 
@@ -22,7 +22,17 @@ class InfoForm(forms.ModelForm):
         else:
             infocomp.name = filename.replace(" ","_")
             return infocomp
-
+     
+    def clean_tags(self):
+        tags = self.cleaned_data['tags']     
+        tags_list = tags.split(",")
+        tags_final = []
+        for tag in tags_list:
+            tag = tag.lower().strip()
+            tag = slugify(tag)
+            tags_final.append(tag)
+        return tags_final
+  
 class EditForm(forms.Form):
   
     tags = forms.CharField(label=u"Tags", help_text="Add tags, separate them with comma")     

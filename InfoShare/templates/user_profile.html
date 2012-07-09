@@ -7,6 +7,22 @@
 
 {% block body_class %}Home{% endblock %}
 
+{% block extra_style %}
+<style>
+.tag-cloud {
+margin: 0;
+padding: 0;
+text-align: left;
+width: 100%;
+position: relative;
+padding-top: 15em;
+
+
+
+}
+</style>
+{% endblock %}
+
 {% block subnav %}
     {% if user.is_authenticated %}
         <ul class="nav nav-pills nav-stacked">
@@ -34,8 +50,22 @@
 <div style="text-align:left">
     <p> 
       <h2> Welcome, {{ username }} </h2>
-      <h4> Your email adress is  {{ email }} </h4> 
      </p>   
     </div>
+    
+<div class="tag-cloud">    
+{% for tag in tags.tagcloud %}
+<font style="font-size: {{ tag.size }}em;"><a href="/infocomp/tags/{{ tag.tag }}">{{ tag.tag }}</a></font>
+&nbsp;
+{% if forloop.counter|divisibleby:"5" %}
+<br/>
+<br/>
+{% endif %}
+{% endfor %}
+</div>
+
+
 {% endblock %}
+
+
 
