@@ -14,28 +14,28 @@ Please follow following steps to install dependencies and run project.
 1) Install Python 2.7
 2) Install pip for python 2.7
 3) Install PostGreSQL
-3) sudo pip install -r requirements.txt
-4) (After Installation) cd InfoShare
-5) Open settings.py and replace database NAME social with your postgresql database name.
-6) Add USER name in your database setting.
-7) Synchronize database with python manage.py syncdb
-8) Create super user during database sync.
-9) Run site using python manage.py runserver   (Default port is 8000 and IP is 127.0.0.1 (localhost), But you can change port number and 
+4) Install xapian and xapian-bindings for your operating system (Instructions for every operating system http://xapian.org/download)
+5) sudo pip install -r requirements.txt
+6) (After Installation) cd InfoShare
+7) Open settings.py and replace database NAME social with your postgresql database name.
+8) Add USER name in your database setting.
+9) Synchronize database with python manage.py syncdb
+10) Create super user during database sync.
+11) Run site using python manage.py runserver   (Default port is 8000 and IP is 127.0.0.1 (localhost), But you can change port number and 
 IP using extra parameters like python manage.py runserver [port or ipaddr:port])
-10) Log in to 127.0.0.1:8000/admin or {{your configured IP and port as per step 9}}/admin and go to sites, replace example.com with 127.0.0.1:8000 or your configured IP and port as per step 9
+12) Log in to 127.0.0.1:8000/admin or {{your configured IP and port as per step 9}}/admin and go to sites, replace example.com with 127.0.0.1:8000 or your configured IP and port as per step 9
 This step is necessary to send a correct link for email confirmation and password change.
-
-I have created a gmail account to use google smtp server for email confirmation and change password link. Email address is informationsocialnetwork@gmail.com and password is #password#
-Settings for the same is in settings.py file. Everything is already set, You don't need to change this settings unless you want to use different SMTP or account.
-
-
 
 
 
 --> To update database :- python manage.py syncdb
 --> To run project :- python manage.py runserver
---> To send mail to registered users and change password requests :- python manage.py send_mail
---> To send deferred mails :- python manage.py retry_deferred
+--> To send mail to registered users and change password requests :- python manage.py send_mail   (This is not necessary, If you are using installtasks, This will be done every 1 minute)
+--> To send deferred mails :- python manage.py retry_deferred              (This is not necessary, If you are using installtasks, This will be done every 1 minute)
+--> To Install tasks :- python manage.py installtasks           (This tasks will be added to crontab)
+--> To rebuild index :- python manage.py rebuild_index  (This is not necessary, If you are using installtasks, This will be done every 1 minute)
+--> To update index :- python manage.py update_index (This is not necessary, If you are using installtasks, This will be done every 1 minute)
+
 
 
 
