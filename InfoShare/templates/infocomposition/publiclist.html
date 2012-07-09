@@ -40,7 +40,7 @@
 			<td>
 			
 			{% for tag in infocomp.tags.all %}
-		       {{ tag }}
+		       <a href="{% url tagsrl tag %}" >{{ tag }}</a>
 		       {% if not forloop.last %}
 		       ,  
 		       {% endif %}

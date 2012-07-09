@@ -3,7 +3,9 @@ import glob
 import zipfile
 from shutil import rmtree
 from tempfile import *
+from math import log
 from PIL import Image as PImage
+from mptt.models import MPTTModel, TreeForeignKey
 from django.db import models
 from django.core.files import File
 from django.contrib.auth.models import User
@@ -33,10 +35,35 @@ def thumbnail_path(instance, filename):
      
 class Tag(models.Model):
     tag = models.CharField(max_length=100)
-
+    
     def __unicode__(self):
         return self.tag
+    
 
+    def tagcloud(self):
+
+        counts, taglist, tagcloud = [], [], []
+                
+        threshold=0  # Threshold occurence value, i.e,  0 means minimum size with no occurrence
+        maxsize=2.5   # Maximum css size
+        minsize=1  # Minimum css size
+        
+        tags = Tag.objects.all()
+        for tag in tags:
+            count = tag.infocomposition_set.count()
+            count >= threshold and (counts.append(count), taglist.append(tag))
+            
+        maxcount = max(counts)
+        mincount = min(counts)
+        constant = log(maxcount - (mincount - 1))/(maxsize - minsize or 1)
+        tagcount = zip(taglist, counts)
+        if constant == 0:
+            constant = 1
+        for tag, count in tagcount:
+            size = log(count - (mincount - 1))/constant + minsize
+            tagcloud.append({'tag': tag, 'id': tag.id, 'count': count, 'size': round(size, 7)})
+        return tagcloud
+    
 class InfoComposition(models.Model):
     """
     Main Information Composition Model   
@@ -123,3 +150,18 @@ class InfoComposition(models.Model):
             os.remove(thumb_path)
         
         super(InfoComposition,self).delete()
+
+class Comment(MPTTModel):
+    """
+    Threaded comments 
+  
+    """
+    infocomp = models.ForeignKey(InfoComposition)
+    author = models.CharField(max_length=60)
+    comment = models.TextField()
+    added  = models.DateTimeField()
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+
+    class MPTTMeta:
+        order_insertion_by=['added']
+

@@ -1,8 +1,36 @@
 {% extends 'infocomposition/base.html' %}
 
 {% load infocomposition_tags %}
+{% load mptt_tags %}
 
 {% block head_title %} {{ infocomp.name }} {% endblock %}
+
+{% block extra_style %}
+<style>
+   
+.comment_textarea {
+    height: 3em;
+    width: 40em;
+    border: 3px solid #cccccc;
+    padding: 5px;
+    font-family: Tahoma, sans-serif;
+}
+.reply_form {
+    display: none;
+}
+</style>
+{% endblock %}
+
+{% block extra_script %}
+
+ <script type="text/javascript">
+     
+   $('.reply-btn').click(function() { $(this).next('form').toggle(); });
+
+    </script>
+
+{% endblock %}
+
 
 
 {% block body %}
@@ -33,19 +61,58 @@
 <br/>
 <h3> Description :- {{ infocomp.description }} </h3>
 <br/>
+<h3> Added :- {{ infocomp.added }} ( {% get_human_time infocomp.added %} )</h3>
+<br/>
 {% if not infocomp.user_id = request.user.id  %}
 <h3> By User :- <a href="/profiles/profile/{{ infocomp.get_user_name  }}" >{{ infocomp.get_user_name  }}</a> </h3>
 <br/>
 {% endif %}
 <h3> Tags :- 
 			{% for tag in infocomp.tags.all %}
-		       {{ tag }}
+		       <a href="{% url tagsrl tag %}" >{{ tag }}</a>
 		       {% if not forloop.last %}
 		       ,  
 		       {% endif %}
 		       {% endfor %}
-		       <h3>
+		       </h3>
 
+<br/>
+<br/>
+<form action="{% url compage infocomp.pk %}" method="post">
+    <textarea name="comment" class="comment_textarea"></textarea>
+    <input type="hidden" name="parent_id" value="">
+    <input type="submit" class="btn btn-success" value="Add comment">
+</form>
 
+<br/>
+<br/>
 
+{% load mptt_tags %}
+{% recursetree comments %}
+    <div style="margin-left: {{ node.get_level }}0ex" class="comment_class">
+<br/>
+        {# comment #}
+    <h4>    <a href="{% url profile_detail node.author %}"> {{node.author }} </a>  |  {% get_human_time node.added %} </h4>
+    <br/>
+      {{ node.comment|linebreaks }}
+        {# form to reply to this comment #}
+       <a href="javascript:;" class="reply-btn">Reply</a>
+       
+         <form action="{% url compage infocomp.pk %}" method="post" class="reply-form-nr" style="display:none;">
+         <br/>
+            <textarea name="comment" class="comment_textarea"></textarea>
+            <input type="hidden" name="parent_id" value="{{ node.id}}"> {# <-- parent id goes here #}
+            <input type="submit" class="btn btn-success"  value="Reply">
+        </form>
+    
+
+   </div>
+    {# recursion! children of a given comment #}
+  
+    {% if not node.is_leaf_node %}
+        {{ children }}       
+    {% endif %}
+  
+     
+{% endrecursetree %}
 {% endblock %}

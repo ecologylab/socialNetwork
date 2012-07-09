@@ -28,7 +28,7 @@ MANAGERS = ADMINS
 DATABASES = {
     "default": {
         "ENGINE": "postgresql_psycopg2", # Add "postgresql_psycopg2", "postgresql", "mysql", "sqlite3" or "oracle".
-        "NAME": "social",                       # Or path to database file if using sqlite3.
+        "NAME": "newsocial",                       # Or path to database file if using sqlite3.
         "USER": "",                             # Not used with sqlite3.
         "PASSWORD": "",                         # Not used with sqlite3.
         "HOST": "",                             # Set to empty string for localhost. Not used with sqlite3.
@@ -89,7 +89,7 @@ MIDDLEWARE_CLASSES = [
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
     "pagination.middleware.PaginationMiddleware",
     "django.middleware.csrf.CsrfResponseMiddleware",
-#    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "InfoShare.urls"
@@ -135,6 +135,7 @@ INSTALLED_APPS = [
     "mailer",
     "django_openid",
     "timezones",
+    "mptt",
     "emailconfirmation",
     "announcements",
     "pagination",
@@ -151,6 +152,8 @@ INSTALLED_APPS = [
     # project
     "profiles",
     "userpage",
+    "kronos",
+    "search",
     "friends",
     "messages",
     "avatar",

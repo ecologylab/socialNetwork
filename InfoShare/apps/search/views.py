@@ -22,12 +22,12 @@ def search_list(request):
         else:
             search_infocomp.append(result.object)
 
-    for result in search_infocomp:
-         if result.private == True:
-              if result.user_id == request.user.id:
-                  InfoComp.append(result)        
-         else: 
-              InfoComp.append(result)
+    for result in search_infocomp: 
+        if result.private == True:
+            if result.user_id == request.user.id:
+                InfoComp.append(result)        
+        else: 
+            InfoComp.append(result)
          
     variables = RequestContext(request,{'infocomps' : InfoComp,"users" : search_user  })
     return render_to_response("search/search.html",variables)
