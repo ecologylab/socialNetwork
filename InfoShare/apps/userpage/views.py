@@ -3,9 +3,9 @@ from apps.profiles.models import *
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from apps.infocomposition.models import *    
-from django.contrib.auth.decorators import login_required 
+ 
 
-@login_required
+
 def user_home(request):
     if request.user.is_authenticated():
         tags = Tag.objects.all()
