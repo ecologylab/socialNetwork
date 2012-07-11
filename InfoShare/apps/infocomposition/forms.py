@@ -29,7 +29,8 @@ class InfoForm(forms.ModelForm):
         tags_final = []
         for tag in tags_list:
             tag = tag.lower().strip()
-            tag = slugify(tag)
+            tag = slugify(tag)    
+            tag = tag.replace("-","_")        
             tags_final.append(tag)
         return tags_final
   
