@@ -18,9 +18,11 @@ def search_list(request):
 
     for result in results:
         if str(result.model_name) == "user":
-            search_user.append(result.object)
+            if(result.object):
+                search_user.append(result.object)
         elif str(result.model_name) == "infocomposition":
-            search_infocomp.append(result.object)
+            if(result.object):
+                search_infocomp.append(result.object)
         else:
             pass
 
