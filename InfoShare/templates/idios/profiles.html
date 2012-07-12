@@ -12,7 +12,7 @@
         <br/>
     </header>
     
-    {% autopaginate profiles %}
+    {% autopaginate profiles 10 %}
     
     {% for profile in profiles %}
         {% include "profiles/_profile_item.html" %}

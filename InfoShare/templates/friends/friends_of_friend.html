@@ -1,14 +1,15 @@
 {% extends 'friends/base.html' %}
-{% load i18n friends_tags %}
+{% load friends_tags %}
 
-{% block friends_title %}{% blocktrans %}{{ friend }}'s friends{% endblocktrans %}
+{% block friends_title %}{{ friend }}'s friends {% endblock %}
 
 {% block friends_content %}
 <div style="text-align:center">
 <ul>
 {% for friend in friends %}
 	{% are_friends user friend as are_friends %}
-	<li><a href="{% url profile_detail username=friend.username %}">{{ friend }}</a> ({% if are_friends %}<a href="{% url friends_remove friend.username %}">{% trans "remove from friends" %}</a>{% else %}<a href="{% url friends_invite friend.username %}">{% trans "invite to friends" %}</a>{% endif %})</li>
+	
+	<li><a href="{% url profile_detail username=friend.username %}">{{ friend }}</a> &nbsp; {% if are_friends %}<a href="{% url friends_remove friend.username %}" class="btn btn-danger"> <i class="icon-remove icon-white"></i> &nbsp;Remove from friends</a>{% else %}<a href="{% url friends_invite friend.username %}" class="btn btn-primary"> <i class="icon-plus icon-white"></i> &nbsp; Add as friend</a>{% endif %}</li>
 {% endfor %}
 </ul>
 </div>

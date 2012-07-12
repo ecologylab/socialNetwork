@@ -10,7 +10,7 @@
     <tbody>
 {% for message in message_list %} 
     <tr>
-        <td>{{ message.recipient }}</td>
+        <td><a href="{% url profile_detail username=message.recipient %}">{{ message.recipient }}</a></td>
         <td>
         <a href="{{ message.get_absolute_url }}">{{ message.subject }}</a>
         </td>
