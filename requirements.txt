@@ -11,7 +11,6 @@ psycopg2
 
 django-debug-toolbar==0.9.1
 django_compressor==1.1.2
-django-friendship
 django-haystack==1.2.7
 xapian-haystack==1.1.5beta
 django-mptt==0.5.2
@@ -29,6 +28,7 @@ django-announcements==0.1.2
 django-pagination==1.0.7
 django-notification==0.2
 idios==0.2a1
+simplejson==2.6.0
 pil==1.1.7
 
 
