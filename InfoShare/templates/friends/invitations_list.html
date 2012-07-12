@@ -18,7 +18,8 @@
 	
 		<tr>
 			<td>
-				<a href="/profiles/">{% if status == 'received' %}{{ invitation.from_user }}{% endif %}{% if status == 'sent' %}{{ invitation.to_user }}{% endif %}</a>
+		{% if status == 'received' %}<a href="{% url profile_detail username=invitation.from_user %}">{{ invitation.from_user }}</a>{% endif %}
+	        {% if status == 'sent' %}<a href="{% url profile_detail username=invitation.to_user %}">{{ invitation.to_user }}</a>{% endif %}
 			</td>
 			<td>{{ invitation.sent }}</td>
 			<td>
@@ -30,3 +31,5 @@
 </table>
 
 {% endblock %}
+
+

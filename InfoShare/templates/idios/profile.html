@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load account_tags %}
+{% load friends_tags %}
 {% load url from future %}
 
 {% block head_title %}{% user_display page_user as page_user_display %}{% blocktrans %}Profile for {{ page_user_display }}{% endblocktrans %}{% endblock %}
@@ -12,11 +13,15 @@
         <h1>{{ page_user_display }}</h1>
         <p>                    </p>
     </header>
-    
+    {% are_friends user profile.user as rel_position %}
     {% if not is_me %}
     <a href="{% url 'messages_compose_to' recipient=page_user_display %}" class="btn btn-info"> <i class="icon-envelope icon-white"></i> &nbsp; Send Message </a>
     &nbsp;
+    {% if not rel_position %}
     <a href="{% url "friends_invite" username=page_user_display %}" class="btn btn-primary"> <i class="icon-plus icon-white"></i> &nbsp; Add as friend</a>
+    {% else %}
+    <a href="/friends/of_friend/{{ profile.user }}" class="btn btn-primary"> <i class="icon-plane" icon-white"></i> &nbsp; {{ profile.user }}'s Friends </a>
+    {% endif %}
     {% endif %}
     {% include "profiles/_profile_info.html" %}
     
