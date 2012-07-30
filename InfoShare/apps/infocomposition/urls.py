@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
 
 
+
 urlpatterns = patterns('infocomposition.views',
     url(r'^add/$','InfoAdd'),
     url(r'^list/$', 'InfoList'),    

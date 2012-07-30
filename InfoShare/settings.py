@@ -154,6 +154,7 @@ INSTALLED_APPS = [
     "userpage",
     "kronos",
     "search",
+    "tastypie",
     "friends",
     "messages",
     "avatar",
@@ -187,6 +188,8 @@ ACCOUNT_REQUIRED_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = True
 ACCOUNT_EMAIL_AUTHENTICATION = False
 ACCOUNT_UNIQUE_EMAIL = EMAIL_CONFIRMATION_UNIQUE_EMAIL = True
+TASTYPIE_DATETIME_FORMATTING = 'rfc-2822'
+
 
 AUTHENTICATION_BACKENDS = [
     "pinax.apps.account.auth_backends.AuthenticationBackend",

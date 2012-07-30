@@ -63,7 +63,8 @@ class Tag(models.Model):
             size = log(count - (mincount - 1))/constant + minsize
             tagcloud.append({'tag': tag, 'id': tag.id, 'count': count, 'size': round(size, 7)})
         return tagcloud
-    
+
+
 class InfoComposition(models.Model):
     """
     Main Information Composition Model   
@@ -94,8 +95,11 @@ class InfoComposition(models.Model):
         infocomp_path = self.infocomp.name
         infocomp_base = os.path.basename(infocomp_path)        
         filename = os.path.splitext(infocomp_base)[0]
-        self.filename = filename
+        self.filename = filename	
         super(InfoComposition,self).save(*args,**kwargs)
+	if not self.thumbnail:
+            self.unzip_and_generate()
+	   
 
     def unzip_and_generate(self):
         infocomp_file = self.infocomp
@@ -127,7 +131,7 @@ class InfoComposition(models.Model):
             im.save(tf.name, "JPEG")
             self.thumbnail.save(thumb_file, File(open(tf.name)), save=False)
             tf.close()
-            self.save()
+            self.save()             
 
        
     def delete(self): 

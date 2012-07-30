@@ -4,6 +4,8 @@ from django.views.generic.simple import direct_to_template
 from apps.userpage.views import *
 from apps.infocomposition.views import *
 from django.contrib import admin
+from tastypie.api import Api
+from apps.infocomposition.api import InfoCompositionResource, UserResource, UserListResource
 admin.autodiscover()
 import os
 from pinax.apps.account.openid_consumer import PinaxConsumer
@@ -11,6 +13,11 @@ static = os.path.join(os.path.dirname(__file__),"site_media","static")
 media = os.path.join(os.path.dirname(__file__),"site_media","media")
 
 handler500 = "pinax.views.server_error"
+
+info_api = Api(api_name='info')
+info_api.register(UserResource())
+info_api.register(InfoCompositionResource())
+info_api.register(UserListResource())
 
 
 urlpatterns = patterns("",
@@ -24,6 +31,7 @@ urlpatterns = patterns("",
     url(r'^search/', include('search.urls')),
     url(r"^notices/", include("notification.urls")),
     url(r'^friends/', include('friends.urls')),
+    url(r'^api/', include(info_api.urls)),
     url(r'^avatar/', include('avatar.urls')),
     url(r'^avatar_crop/', include('avatar_crop.urls')),
     url(r"^announcements/", include("announcements.urls")),
