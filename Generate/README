@@ -1,0 +1,7 @@
+To Generate Users :-
+
+Run, python generate_user.py 100
+
+Where 100 is number of users to generate, You can generate users upto 5000.
+
+There will be intial_data.json JSON file in the same folder, Place this file in {{ POJECT_ROOT }}/fixtures folder.

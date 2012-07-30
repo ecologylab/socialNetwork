@@ -3,10 +3,10 @@ import datetime
 from apps.infocomposition.forms import *
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
-#from haystack.management.commands import update_index
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from apps.infocomposition.models import *
+from django.http import QueryDict
 from django.core.servers.basehttp import FileWrapper
 from settings import MEDIA_ROOT
 
@@ -18,21 +18,18 @@ def InfoAdd(request):
     """
     if request.method == 'POST': 
         info_form = InfoForm(request.POST,request.FILES)
-        if info_form.is_valid():
-            infocomposition = InfoComposition.objects.create(                       
+        if info_form.is_valid(): 
+	    infocomposition = InfoComposition.objects.create(                       
                  name = info_form.cleaned_data['name'],
                  infocomp = request.FILES['infocomp'],
                  description = info_form.cleaned_data['description'],
                  private = info_form.cleaned_data['private'],   
                  user = request.user
-               ) 
+               )
             tags_list = info_form.cleaned_data['tags']
             for tag_name in tags_list:                
                 tag,created = Tag.objects.get_or_create(tag=tag_name)
                 infocomposition.tags.add(tag) 
-            infocomposition.save()
-            infocomposition.unzip_and_generate()
-#            update_index.Command().handle()
             return HttpResponseRedirect("/infocomp/add")          
     else:
         info_form = InfoForm()
@@ -46,8 +43,7 @@ def InfoList(request):
     """
     Listing Information Compositions for current user
 
-    """
-    
+    """  
     uid = request.user.id 
     infocomp = InfoComposition.objects.filter(user=uid)
     variables = RequestContext(request, {'infocomps' : infocomp, })
@@ -136,6 +132,10 @@ def PublicDownload(request,pk):
     
 @login_required
 def CompositionPage(request,pk):
+    """
+    Information Composition Page
+
+    """
     infocomp = InfoComposition.objects.get(pk=pk)
     if request.method == "POST":
         comment = Comment(
@@ -154,8 +154,12 @@ def CompositionPage(request,pk):
 
 @login_required
 def UserComposition(request,pk):
+    """
+    Information Compositions by specific user
+
+    """
     user = User.objects.get(pk=pk)
-    user_id = user.id
+    user_id = user.id  
     username = user.username
     infocomp = InfoComposition.objects.filter(user=user_id,private=False)
     variables = RequestContext(request,{'infocomps' : infocomp,'username' : username})
@@ -163,8 +167,16 @@ def UserComposition(request,pk):
 
 @login_required
 def TagsPage(request,tagname):
+    """
+    Tags Page
+
+    """
+    user_id = request.user.id  
     tag = get_object_or_404(Tag,tag=tagname)
-    infocomps = InfoComposition.objects.filter(tags=tag,private=False)
+    public_infocomps = InfoComposition.objects.filter(tags=tag,private=False)
+    user_infocomps = InfoComposition.objects.filter(tags=tag,user=user_id)
+    infocomps = public_infocomps | user_infocomps
+    infocomps = infocomps.order_by("added")
     variables = RequestContext(request, {'infocomps' : infocomps,'tagname' : tagname})
     return render_to_response("infocomposition/tags.html",variables) 
 
