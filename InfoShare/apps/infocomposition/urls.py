@@ -3,15 +3,14 @@ from django.conf.urls.defaults import *
 
 
 urlpatterns = patterns('infocomposition.views',
-    url(r'^add/$','InfoAdd'),
-    url(r'^list/$', 'InfoList'),    
-    url(r'^download/(?P<pk>[\d]+)/$','DownloadInfoComp',name='download'),
-    url(r'^delete/(?P<pk>[\d]+)/$','DeleteInfoComp', name='delete'),
-    url(r'^public/$','PublicList'),
-    url(r'^pdownload/(?P<pk>[\d]+)/$','PublicDownload',name='pdownload'),
+    url(r'^add/$','InfoAdd', name="addinfocomp"),
+    url(r'^list/$', 'InfoList', name="mylistcomp"),    
+    url(r'^download/(?P<hash_key>[\w]+)/$','DownloadInfoComp',name='download'),
+    url(r'^delete/(?P<hash_key>[\w]+)/$','DeleteInfoComp', name='delete'),
+    url(r'^public/$','PublicList',name="publiclist"),
     url(r'^tags/(?P<tagname>[\w]+)/$','TagsPage',name='tagsrl'),
-    url(r'^composition/(?P<pk>[\d]+)/$','CompositionPage',name='compage'),
+    url(r'^c/(?P<hash_key>[\w]+)/$','CompositionPage',name='compage'),
     url(r'^user_comp/(?P<pk>[\d]+)/$','UserComposition',name='usercomp'),
-   
+    
 )
 

@@ -38,16 +38,13 @@
 
 <a href="{% get_html_path infocomp.user_id infocomp.pk %}" target="_blank"><img border="0" alt="" src="{% media_url %}/{{ infocomp.thumbnail }}" width="150" /></a>
 &nbsp;
-{% if infocomp.user_id = request.user.id  %}
-<a href="{% url download pk=infocomp.pk %}" class="btn btn-success"> <i class="icon-download-alt icon-white"></i> &nbsp; Download </a>
+
+<a href="{% url download hash_key=infocomp.hash_key %}" class="btn btn-success"> <i class="icon-download-alt icon-white"></i> &nbsp; Download </a>
 &nbsp;
-{% else %}
-<a href="{% url pdownload pk=infocomp.pk %}" class="btn btn-success"> <i class="icon-download-alt icon-white"></i> &nbsp; Download </a>
-&nbsp;
-{% endif %}
+
 
 {% if  infocomp.user_id = request.user.id  %}
-<a href="{% url delete pk=infocomp.pk %}" class="btn btn-danger"> <i class="icon-remove icon-white"></i> &nbsp; Delete </a>
+<a href="{% url delete hash_key=infocomp.hash_key %}" class="btn btn-danger"> <i class="icon-remove icon-white"></i> &nbsp; Delete </a>
 &nbsp;
 <a href="#" class="btn btn-primary"> <i class="icon-edit icon-white"></i> &nbsp; Edit Information </a>
 {% endif %}
@@ -78,7 +75,7 @@
 
 <br/>
 <br/>
-<form action="{% url compage infocomp.pk %}" method="post">
+<form action="{% url compage hash_key=infocomp.hash_key %}" method="post">
     <textarea name="comment" class="comment_textarea"></textarea>
     <input type="hidden" name="parent_id" value="">
     <input type="submit" class="btn btn-success" value="Add comment">
@@ -98,7 +95,7 @@
         {# form to reply to this comment #}
        <a href="javascript:;" class="reply-btn">Reply</a>
        
-         <form action="{% url compage infocomp.pk %}" method="post" class="reply-form-nr" style="display:none;">
+         <form action="{% url compage hash_key=infocomp.hash_key %}" method="post" class="reply-form-nr" style="display:none;">
          <br/>
             <textarea name="comment" class="comment_textarea"></textarea>
             <input type="hidden" name="parent_id" value="{{ node.id}}"> {# <-- parent id goes here #}

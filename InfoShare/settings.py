@@ -140,6 +140,7 @@ INSTALLED_APPS = [
     "announcements",
     "pagination",
     "idios",
+    "piston",
     "metron",
     "haystack",
     "django_forms_bootstrap", 
@@ -154,11 +155,11 @@ INSTALLED_APPS = [
     "userpage",
     "kronos",
     "search",
-    "tastypie",
     "friends",
     "messages",
     "avatar",
     "avatar_crop",
+    "api",
     "infocomposition",
 ]
 
@@ -172,12 +173,8 @@ ABSOLUTE_URL_OVERRIDES = {
                                                                                                                                                                                              
 AUTH_PROFILE_MODULE = "profiles.Profile"                                                                                                                                                     
 NOTIFICATION_LANGUAGE_MODULE = "account.Account"  
-
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
-
 EMAIL_BACKEND = "mailer.backend.DbBackend"
-
-#AVATAR_STORAGE_DIR = os.path.join(PROJECT_ROOT, "site_media", "media","avatars")
 FRIENDS_USE_NOTIFICATION_APP = True
 SHOW_FRIENDS_OF_FRIEND = True
 NOTIFY_ABOUT_NEW_FRIENDS_OF_FRIEND = True

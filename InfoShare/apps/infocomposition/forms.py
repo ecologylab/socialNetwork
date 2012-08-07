@@ -10,7 +10,7 @@ class InfoForm(forms.ModelForm):
  
     class Meta:
         model = InfoComposition
-        exclude = ('user','filename','thumbnail')
+        exclude = ('user','filename','thumbnail',"hash_key")
      
     def clean_infocomp(self):
         infocomp = self.cleaned_data['infocomp']

@@ -30,7 +30,7 @@ def InfoAdd(request):
             for tag_name in tags_list:                
                 tag,created = Tag.objects.get_or_create(tag=tag_name)
                 infocomposition.tags.add(tag) 
-            return HttpResponseRedirect("/infocomp/add")          
+            return HttpResponseRedirect("/ic/add")          
     else:
         info_form = InfoForm()
     variables = RequestContext(request, {'form' : info_form})
@@ -50,15 +50,15 @@ def InfoList(request):
     return render_to_response('infocomposition/infocomplist.html',variables)
 
 @login_required
-def DownloadInfoComp(request,pk):
+def DownloadInfoComp(request,hash_key):
     """
     Download Information Composition .icom file
 
     """
-    infocomposition = InfoComposition.objects.get(pk=pk)
+    infocomposition = get_object_or_404(InfoComposition,hash_key=hash_key)
     userid = request.user.id
     infocomp_user = infocomposition.user_id 
-    if userid == infocomp_user:
+    if userid == infocomp_user or infocomposition.private == False:
         infocomp = infocomposition.infocomp.name
         infocomp_base = os.path.basename(infocomp)
         file_path = os.path.join(MEDIA_ROOT,infocomp)   
@@ -76,25 +76,23 @@ def DownloadInfoComp(request,pk):
         error_message = u"Forbidden"
         variables = RequestContext(request, {'error_message' : error_message})
         return render_to_response("infocomposition/error.html",variables)
-
            
-    
    
 @login_required
-def DeleteInfoComp(request,pk):
+def DeleteInfoComp(request,hash_key):
     """
     Delete Information Composition
     
     """
   
-    infocomposition = InfoComposition.objects.get(pk=pk)
+    infocomposition = get_object_or_404(InfoComposition,hash_key=hash_key)
     userid = request.user.id
     username = request.user.username
     infocomp_user = infocomposition.user_id
     if userid == infocomp_user:
         name = infocomposition.name
         infocomposition.delete()   
-        return HttpResponseRedirect("/infocomp/list")
+        return HttpResponseRedirect("/ic/list")
     else: 
         error_message = u"Forbidden"
         variables = RequestContext(request, {'error_message' : error_message})
@@ -110,33 +108,14 @@ def PublicList(request):
     variables = RequestContext(request,{'infocomps' : infocomposition})
     return render_to_response("infocomposition/publiclist.html",variables)
 
-def PublicDownload(request,pk):
-    """
-    Public Download Option, Without checking whether user owns information composition or not
-
-    """
-    infocomposition = InfoComposition.objects.get(pk=pk)
-    infocomp = infocomposition.infocomp.name
-    infocomp_base = os.path.basename(infocomp)
-    file_path = os.path.join(MEDIA_ROOT,infocomp)   
-    if os.path.isfile(file_path):     
-        wrapper = FileWrapper(open(file_path))  
-        response = HttpResponse(wrapper,mimetype='application/force-download')
-        response['Content-Length']  = os.path.getsize(file_path)
-        response['Content-Disposition'] = "attachment; filename=%s" % infocomp_base
-        return response
-    else:
-        error_message = u"File not found"
-        variables = RequestContext(request,{'error_message' : error_message})
-        return render_to_response("infocomposition/error.html",variables)
-    
+   
 @login_required
-def CompositionPage(request,pk):
+def CompositionPage(request,hash_key):
     """
     Information Composition Page
 
     """
-    infocomp = InfoComposition.objects.get(pk=pk)
+    infocomp = get_object_or_404(InfoComposition,hash_key=hash_key)
     if request.method == "POST":
         comment = Comment(
             infocomp = infocomp,

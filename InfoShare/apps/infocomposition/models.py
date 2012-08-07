@@ -1,6 +1,8 @@
 import os
 import glob
 import zipfile
+import random
+import string
 from shutil import rmtree
 from tempfile import *
 from math import log
@@ -10,6 +12,21 @@ from django.db import models
 from django.core.files import File
 from django.contrib.auth.models import User
 from settings import MEDIA_ROOT
+from django.shortcuts import get_object_or_404
+
+
+def get_random_string():
+    pool = string.letters + string.digits
+    rand_string =  ''.join(random.choice(pool) for i in xrange(10))
+    exists = True
+    while(exists == True):
+        try:
+            obj = get_object_or_404(InfoComposition,hash_key=rand_string)
+            rand_string =  ''.join(random.choice(pool) for i in xrange(10))
+        except:            
+            exists = False
+    return rand_string
+            
 
 
 def get_upload_path(instance, filename):
@@ -72,6 +89,7 @@ class InfoComposition(models.Model):
     """
 
     name = models.CharField(max_length=50)
+    hash_key = models.CharField(max_length=10,null=True,unique=True)
     infocomp = models.FileField(upload_to=get_upload_path)   
     tags = models.ManyToManyField(Tag, blank=True)
     description = models.TextField(blank=True)
@@ -96,6 +114,7 @@ class InfoComposition(models.Model):
         infocomp_base = os.path.basename(infocomp_path)        
         filename = os.path.splitext(infocomp_base)[0]
         self.filename = filename	
+        self.hash_key = get_random_string()
         super(InfoComposition,self).save(*args,**kwargs)
 	if not self.thumbnail:
             self.unzip_and_generate()
