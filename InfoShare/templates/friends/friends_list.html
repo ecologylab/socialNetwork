@@ -1,5 +1,6 @@
 {% extends 'friends/base.html' %}
 {% load i18n %}
+{% load avatar_tags %}
 
 
 {% block friends_title %}{% trans "Friends" %}{% endblock %}
@@ -13,7 +14,7 @@
 {% if friends %} 
     {% for friend in friends %}
    <h4> <ul>
-        <li><a href="{% url profile_detail username=friend.username %}">{{ friend }}</a>  &nbsp; &nbsp;   <a href="{% url friends_remove friend.username %}" class="btn btn-danger"> <i class="icon-remove icon-white"></i> &nbsp;{% trans "Remove" %}</a></li> </br>
+        <li>{% avatar friend 70 %} &nbsp;<a href="{% url profile_detail username=friend.username %}">{{ friend }}</a>  &nbsp; &nbsp;   <a href="{% url friends_remove friend.username %}" class="btn btn-danger"> <i class="icon-remove icon-white"></i> &nbsp;{% trans "Remove" %}</a></li> </br>
     </ul> </h4>
    {% endfor %}
 {% else %}
