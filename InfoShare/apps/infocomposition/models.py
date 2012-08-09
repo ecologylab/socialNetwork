@@ -45,7 +45,7 @@ def thumbnail_path(instance, filename):
     thumbnail path for user
     
     """
-    
+
     username = instance.user.username
     mainpath = os.path.join("infocomp",username,"thumbnails",filename)
     return mainpath
@@ -96,6 +96,7 @@ class InfoComposition(models.Model):
     filename = models.CharField(max_length=50,blank=True)
     private = models.BooleanField(default=False)
     added = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now_add=True) 
     user = models.ForeignKey(User) 
     thumbnail = models.ImageField(upload_to=thumbnail_path, blank=True, null=True)
     
@@ -113,8 +114,9 @@ class InfoComposition(models.Model):
         infocomp_path = self.infocomp.name
         infocomp_base = os.path.basename(infocomp_path)        
         filename = os.path.splitext(infocomp_base)[0]
-        self.filename = filename	
-        self.hash_key = get_random_string()
+        self.filename = filename
+        if not self.hash_key:	
+            self.hash_key = get_random_string()
         super(InfoComposition,self).save(*args,**kwargs)
 	if not self.thumbnail:
             self.unzip_and_generate()
@@ -153,7 +155,13 @@ class InfoComposition(models.Model):
             self.save()             
 
        
-    def delete(self): 
+
+    def delete(self):
+        self.delete_related_data()
+        super(InfoComposition,self).delete()
+
+
+    def delete_related_data(self): 
         infocomp_name = self.infocomp.name
         infocomp_dir_path = os.path.splitext(infocomp_name)[0]
         infocomp_path = os.path.join(MEDIA_ROOT,infocomp_name)              
@@ -172,8 +180,7 @@ class InfoComposition(models.Model):
         if os.path.isfile(thumb_path):
             os.remove(thumb_path)
         
-        super(InfoComposition,self).delete()
-
+        
 class Comment(MPTTModel):
     """
     Threaded comments 
