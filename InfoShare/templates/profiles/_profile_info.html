@@ -15,6 +15,6 @@
     {% if profile.website %}<p><b>{% trans "Website" %}</b>: <a href="{{ profile.website }}">{{ profile.website }}</a></p>{% endif %}
     <br/>
     {% if not is_me %}
-    <a href="/infocomp/user_comp/{{ profile.id }}" class="btn btn-primary"> <i class="icon-share-alt icon-white"></i> &nbsp; Info Composition by {{ profile.user }}</a></p> 
+    <a href="/ic/user_comp/{{ profile.id }}" class="btn btn-primary"> <i class="icon-share-alt icon-white"></i> &nbsp; Info Composition by {{ profile.user }}</a></p> 
     {% endif %}   
 </div>
