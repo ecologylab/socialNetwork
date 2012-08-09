@@ -60,6 +60,8 @@
 <br/>
 <h3> Added :- {{ infocomp.added }} ( {% get_human_time infocomp.added %} )</h3>
 <br/>
+<h3> last_modified :- {{ infocomp.last_modified }} ( {% get_human_time infocomp.last_modified %} )</h3>
+<br/>
 {% if not infocomp.user_id = request.user.id  %}
 <h3> By User :- <a href="/profiles/profile/{{ infocomp.get_user_name  }}" >{{ infocomp.get_user_name  }}</a> </h3>
 <br/>
