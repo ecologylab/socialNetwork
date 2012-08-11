@@ -1,4 +1,5 @@
 import os
+import glob
 import datetime
 from apps.infocomposition.forms import *
 from django.template import RequestContext
@@ -8,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from apps.infocomposition.models import *
 from django.http import QueryDict
 from django.core.servers.basehttp import FileWrapper
-from settings import MEDIA_ROOT
+from settings import MEDIA_ROOT, MEDIA_URL
 
 @login_required
 def InfoAdd(request):
@@ -160,4 +161,37 @@ def TagsPage(request,tagname):
     return render_to_response("infocomposition/tags.html",variables) 
 
 
+@login_required
+def HTML5View(request,hash_key):
+    """
+    To view HTML5 enabled information composition
 
+    """
+    infocomposition = get_object_or_404(InfoComposition,hash_key=hash_key)
+    user_id = request.user.id
+    infocomp_user = infocomposition.user
+    if infocomposition.private == True and infocomp_user.id != user_id:
+        response = HttpResponse("This information composition is private and you are not owner of it.")
+        response.status_code = 404
+        return response        
+    else:
+        infocomp_name = infocomposition.infocomp.name
+        dir_path = os.path.splitext(infocomp_name)[0]
+        infocomp_dir = os.path.join(MEDIA_ROOT,dir_path)
+        os.chdir(infocomp_dir)
+        file_list =  glob.glob("*.json")
+        if len(file_list) == 0:
+            error_message = u"This Information composition doesn't support this view"
+            variables = RequestContext(request,{'error_message' : error_message})
+            return render_to_response("infocomposition/error.html",variables)
+        else:
+            infocomp_with_ext = os.path.basename(infocomp_name)
+            infocomp_file = os.path.splitext(infocomp_with_ext)[0]
+            file_name = file_list[0]
+            username = infocomposition.user.username          
+            file_path = os.path.join(MEDIA_ROOT,"infocomp",username,infocomp_file,file_name)
+            json_file = open(file_path,'r')
+            json_data = json_file.read()
+            infocomp_main_name = infocomposition.name
+            variables = RequestContext(request, {'name' : infocomp_main_name,'json_data':json_data})      
+            return render_to_response("infocomposition/full.html",variables)

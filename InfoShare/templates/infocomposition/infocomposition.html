@@ -51,7 +51,8 @@
 <br/>
 <br/>
 <a href="{% get_html_path infocomp.user_id infocomp.pk %}" target="_blank" class="btn btn-primary"> <i class="icon-fullscreen icon-white"></i> &nbsp; Full View </a>
-<br/>
+&nbsp; &nbsp;
+<a href="{% url full_view infocomp.hash_key %}" target="_blank" class="btn btn-primary"> <i class="icon-fullscreen icon-white"></i> &nbsp; HTML5 View </a>
 <br/>
 <br/>
 <h3> Name :- {{ infocomp.name }} </h3>

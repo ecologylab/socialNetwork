@@ -11,6 +11,6 @@ urlpatterns = patterns('infocomposition.views',
     url(r'^tags/(?P<tagname>[\w]+)/$','TagsPage',name='tagsrl'),
     url(r'^c/(?P<hash_key>[\w]+)/$','CompositionPage',name='compage'),
     url(r'^user_comp/(?P<pk>[\d]+)/$','UserComposition',name='usercomp'),
-    
+    url(r'^html5/(?P<hash_key>[\w]+)/$','HTML5View',name='full_view')    
 )
 
