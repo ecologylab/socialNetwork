@@ -1,0 +1,51 @@
+{% load static %}
+<html>
+	<head>
+		<title> {{ name }}</title>
+		
+		<!-- Styles -->
+		<link href="{% get_static_prefix %}html5/composer.css" rel="stylesheet" type="text/css">
+		
+		<!-- Code -->
+		<script type="text/javascript" src="{% get_static_prefix %}html5/composer.js"></script>
+		
+	        
+		
+		<script>
+		        
+			function setup() {
+				var rootVisual = createCompositionVisual({{ json_data|safe }});
+				document.getElementById("compositionSpace").appendChild(rootVisual);
+			}
+		</script>
+		
+		<style>
+			body {
+				width: 100%;
+				height: 100%;
+				padding: 0px;
+				margin: 0px;
+				background: lightgray;
+			}
+			
+			.footer {
+				text-align: center;
+				margin-left: auto;
+				margin-right: auto;
+				padding: 10px;
+			}
+		</style>
+			
+	</head>
+	
+	<body>		
+			<div id="compositionSpace">
+			      
+			</div>
+			
+			<script>
+				setup();
+			</script>
+	</body>
+	
+</html>
