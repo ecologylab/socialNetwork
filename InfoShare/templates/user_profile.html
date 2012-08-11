@@ -55,7 +55,7 @@ padding-top: 15em;
     
 <div class="tag-cloud">    
 {% for tag in tags.tagcloud %}
-<font style="font-size: {{ tag.size }}em;"><a href="/infocomp/tags/{{ tag.tag }}">{{ tag.tag }}</a></font>
+<font style="font-size: {{ tag.size }}em;"><a href="/ic/tags/{{ tag.tag }}">{{ tag.tag }}</a></font>
 &nbsp;
 {% if forloop.counter|divisibleby:"5" %}
 <br/>
