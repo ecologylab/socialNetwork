@@ -128,8 +128,10 @@ class PostCompositionHandler(BaseHandler):
                 tags_final.append(tag)
             for tag_name in tags_list:
                 tag,created = Tag.objects.get_or_create(tag=tag_name)
-                infocomposition.tags.add(tag) 
-            return "Information Composition Post successful!"
+                infocomposition.tags.add(tag)
+            hash_key = infocomposition.hash_key
+            response_msg = "Information composition POST successful, Information composition has hash " + hash_key
+            return response_msg
   
 
 class LoginHandler(BaseHandler):
