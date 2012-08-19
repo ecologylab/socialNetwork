@@ -1,3 +1,13 @@
+package socialclient;
+/**
+ * 
+ * 
+ *  Client for Information Composition Social Network  
+ * 
+ * 
+ * 
+ */
+
 import java.io.*;
 import java.net.*;
 import ecologylab.generic.Base64Coder;
@@ -12,18 +22,7 @@ public class SocialClient  {
      private static final String login_url = "http://ecoarray0:3800/i/login";
      private static final String user_url = "http://ecoarray0:3800/i/list_compositions_by_user/";
  
-     public static void main(String[] args) {
-    
-         String session = Authenticate("jainit","1234");
-      
-         if(session != null){
-
-            GetCurrentUserComp(session);
-     //     GetInfoComposition(session,"JCTa1HgHPM");
-     //     GetUserComp(session,"jainit");
-   // DownloadInfoComp("http://ecoarray0:3800/i/get_composition/C7rVY5NAYW","/home/jainit/",session);
-        }
-     }
+     public static void main(String[] args) { }
  
     
     public static String Authenticate(String username,String password) {
@@ -143,12 +142,12 @@ public class SocialClient  {
     }
     else
     {
-        System.err.println("path or file name.");
+    	fileUrl(fAddress,fileName,destinationDir,cookie);
     }
     }
 
 
-    public static void fileUrl(String fAddress, String localFileName, String destinationDir,String cookie)  {
+    private static void fileUrl(String fAddress, String localFileName, String destinationDir,String cookie)  {
     
     OutputStream outStream = null; URLConnection uCon = null;
 
@@ -185,7 +184,11 @@ public class SocialClient  {
 }
     
         
-    
+    public SocialClient(){
+    	
+    }   
                  
 }
+
+
     
