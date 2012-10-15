@@ -1,0 +1,30 @@
+{% extends "groups/base.html" %}
+{% load avatar_tags %}
+
+{% block head_title %} Members {% endblock %}
+
+{% block body %}
+<h1>{{ name }}</h1>
+<br/>
+
+<ul class="nav nav-pills">
+    
+   <li><a href="#"> <i class="icon-edit"></i> &nbsp; Edit</a></li>
+    <li><a href="#"> <i class="icon-trash"></i> &nbsp; Delete</a></li>
+    <li><a href="#"> <i class="icon-user"></i> &nbsp;Add a member</a></li> 
+     <li><a href="#"> <i class="icon-tasks"></i> &nbsp;Members List</a></li> 
+</ul>
+
+
+<ul class="nav nav-pills">
+    {% for member in members %}
+    <li>
+    <a href="{{ organization_user.get_absolute_url }}"> {% avatar member 70 %} <br/> <br/>{{ member }}</a>
+    </li>
+    {% endfor %}
+
+{% endblock %}
+
+
+
+

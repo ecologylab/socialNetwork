@@ -1,0 +1,29 @@
+{% extends "groups/base.html" %}
+{% load bootstrap_tags %}
+
+{% block head_title %} Create {% endblock %}
+
+
+{% block body %}
+
+
+
+<form enctype="multipart/form-data" class="form-horizontal" method="POST" action="">{% csrf_token %}
+
+{{ form|as_bootstrap }}
+
+<br/>
+<input type="submit" style="margin-left: 20ex" class="btn btn-primary" value="Submit" />
+
+</form>
+
+<br/>
+
+<h4> You'll be the admin of this group, You can add members by going to your group page after creating it. </h4>
+
+
+
+{% endblock %}
+
+
+

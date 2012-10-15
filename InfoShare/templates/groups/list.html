@@ -1,0 +1,14 @@
+{% extends "groups/base.html" %}
+{% block head_title %} All Groups {% endblock %}
+
+{% block body %}
+<h1>Groups</h1>
+<br/>
+<ul>
+    {% for group in groups %}
+    <h4><li><a href="{% url detail_group group.hash_key %}">{{ group }}</a></li></h4>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+

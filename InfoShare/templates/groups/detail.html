@@ -1,0 +1,19 @@
+{% extends "groups/base.html" %}
+
+{% block head_title %} Group detail {% endblock %}
+
+{% block body %}
+<h1>{{ group }}</h1>
+<br/>
+
+<ul class="nav nav-pills">
+    
+   <li><a href="#"> <i class="icon-edit"></i> &nbsp; Edit</a></li>
+    <li><a href="#"> <i class="icon-trash"></i> &nbsp; Delete</a></li>
+    <li><a href="#"> <i class="icon-user"></i> &nbsp;Add a member</a></li> 
+     <li><a href="#"> <i class="icon-tasks"></i> &nbsp;Members List</a></li> 
+</ul>
+
+
+{% endblock %}
+
